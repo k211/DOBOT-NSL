@@ -1,0 +1,50 @@
+servo_node:
+  ros__parameters:
+    use_sim_time: true
+
+    moveit_servo:
+      move_group_name: "manipulator"
+
+      # joy_to_servo with scale_linear=0.05 outputs real m/s values
+      command_in_type: "speed_units"
+
+      cartesian_command_in_topic: ~/delta_twist_cmds
+      joint_command_in_topic: ~/delta_joint_cmds
+
+      command_out_topic: /joint_trajectory_controller/joint_trajectory
+      command_out_type: "trajectory_msgs/JointTrajectory"
+      publish_joint_positions: true
+      # Velocities disabled: the JTC requires the last trajectory point to have
+      # zero velocity, but servo streams non-zero velocities continuously.
+      # Positions-only output lets the controller interpolate velocities itself.
+      publish_joint_velocities: false
+      publish_joint_accelerations: false
+
+      joint_topic: /joint_states
+      status_topic: ~/status
+
+      publish_period: 0.02
+      max_expected_latency: 0.1
+      incoming_command_timeout: 0.2
+
+      scale:
+        linear: 0.1
+        rotational: 0.1
+        joint: 0.5
+
+      joint_limit_margins: [0.1]
+
+      # ME6 measured (Pinocchio) condition number at the SRDF home pose is ~36,
+      # so the MoveIt Servo defaults (17/25) would hard-stop immediately in a
+      # perfectly ordinary pose. 60/100 leaves headroom while still catching
+      # real singularity approaches (cond blows up fast on a 6-DOF arm).
+      lower_singularity_threshold: 60.0
+      hard_stop_singularity_threshold: 100.0
+      leaving_singularity_threshold_multiplier: 2.0
+
+      check_collisions: false
+
+      use_smoothing: true
+      smoothing_filter_plugin_name: "online_signal_smoothing::ButterworthFilterPlugin"
+
+      is_primary_planning_scene_monitor: true

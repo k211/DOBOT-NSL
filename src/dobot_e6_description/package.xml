@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>dobot_e6_description</name>
+  <version>0.1.0</version>
+  <description>Dobot Magician E6 (ME6) URDF, meshes and SRDF, vendored from
+    Dobot-Arm/DOBOT_6Axis_ROS2_V4 (MIT) and adapted for ROS 2 Jazzy /
+    Gazebo Harmonic. Vendor Gazebo-Classic ros2_control block removed;
+    velocity limits set to sane rad/s values.</description>
+  <maintainer email="marino@calcagni.eu">marino</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

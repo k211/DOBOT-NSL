@@ -1,0 +1,15 @@
+# colcon build products
+build/
+install/
+log/
+
+# upstream reference clones (re-clonable, see README)
+vendor/
+
+# python
+__pycache__/
+*.pyc
+
+# local working notes, not for publication
+HANDOFF_dobot_e6.md
+GUIDE_REAL_ROBOT.md

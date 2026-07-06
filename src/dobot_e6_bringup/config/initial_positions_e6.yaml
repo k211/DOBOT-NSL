@@ -1,0 +1,10 @@
+# Safe starting position for the Dobot ME6 in Gazebo simulation.
+# This is the "home" group state from the vendor SRDF — elbow bent, wrist
+# turned, clear of singularities. All-zeros (fully stretched up) is singular
+# and must not be used with MoveIt Servo.
+joint1: 0.0
+joint2: 0.5337
+joint3: 0.7276
+joint4: 0.3548
+joint5: -1.5848
+joint6: 0.0

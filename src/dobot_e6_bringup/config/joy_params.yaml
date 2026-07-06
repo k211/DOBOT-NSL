@@ -1,0 +1,21 @@
+joy_node:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.1
+    autorepeat_rate: 20.0
+    coalesce_interval_ms: 1
+joy_to_servo_node:
+  ros__parameters:
+    axis_linear_x: 1
+    axis_linear_y: 0
+    axis_angular_yaw: 2
+    axis_angular_pitch: 3
+    axis_l2: 4
+    axis_r2: 5
+    enable_button: 9
+    enable_turbo_button: 10
+    # E6 reach is 0.45 m (vs 0.9 m Gen3) — halve linear speed vs the Kinova.
+    scale_linear: 0.05
+    scale_angular: 0.3
+    scale_turbo: 3.0
+    frame_id: base_link
