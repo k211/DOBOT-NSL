@@ -4,9 +4,12 @@ How to connect, run, drive and pack down the arm for live probe-on-phantom
 demonstrations. Written for engineers who have not worked with a robot arm
 before.
 
-**[⬇ Download the manual as a PDF](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** — sections 1–7, the operating
-manual, in one file for sharing or printing. Sections 8 and 9 are developer
-material and stay here in the repository.
+| Download | Covers | Pages |
+|---|---|---|
+| **[⬇ Quick guide](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Quick-Guide.pdf)** | Power on, run, drive. For the operator on the day | 7 |
+| **[⬇ Full manual](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** | Sections 1–7: safety, lights, setup, running, joystick, the probe, faults | 19 |
+
+Sections 8 and 9 are developer material and stay here in the repository.
 
 ---
 

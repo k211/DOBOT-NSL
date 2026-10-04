@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
-"""Build the single-file PDF manual from the Markdown topics in this folder.
+"""Build the PDF handouts from the Markdown topics in this folder.
 
     ../.venv/bin/python build_pdf.py
 
 The Markdown files are the source of truth -- they are what people read on
-GitHub, with working links between topics. This script stitches the OPERATING
-sections into one printable document for sharing with people who will not clone
-the repository.
+GitHub, with working links between topics. This script stitches selections of
+them into printable documents for people who will not clone the repository.
 
-Sections 8 (Running on Windows) and 9 (Reference) are deliberately left out of
-the PDF. They are developer material, they change far more often than the
-operating procedure, and a handout that goes stale is worse than one that is
-honestly scoped. They stay in the repository as Markdown.
+Two outputs:
 
-Requires `weasyprint` and `markdown` (both pip-installable). WeasyPrint is used
-rather than pandoc because the diagrams are SVG, and it rasterises them properly
-without needing a LaTeX toolchain or an SVG converter in between.
+  E6-Exhibition-Manual.pdf   sections 1-7, the full operating manual
+  E6-Quick-Guide.pdf         power on, run, drive -- for the operator on the day
+
+Sections 8 (Running on Windows) and 9 (Reference) are in neither. They are
+developer material, they change far more often than the operating procedure, and
+a printed handout that has gone stale is worse than one that is honestly scoped.
+They stay in the repository as Markdown.
+
+Requires `weasyprint` and `markdown` (both pip-installable). WeasyPrint rather
+than pandoc because the diagrams are SVG and it renders them as vectors without
+needing a LaTeX toolchain or an SVG converter in between.
 """
 
 import io
@@ -27,9 +31,8 @@ import markdown
 from weasyprint import HTML
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, 'E6-Exhibition-Manual.pdf')
 
-# Every section, in order. Only PDF_TOPICS is printed.
+# Every section, in order. The builds below select from these.
 ALL_TOPICS = [
     ('01-safety', 'Safety and the emergency stop'),
     ('02-status-lights', 'Status lights'),
@@ -41,15 +44,29 @@ ALL_TOPICS = [
     ('08-windows', 'Running on Windows'),
     ('09-reference', 'Reference'),
 ]
-TOPICS = ALL_TOPICS[:7]          # sections 1-7: the operating manual
-INCLUDED = {name for name, _ in TOPICS}
+
+# The full manual: the seven operating sections, whole.
+FULL = [(name, title, {}) for name, title in ALL_TOPICS[:7]]
+
+# The quick guide: just enough to switch the arm on, start it and drive it.
+# `only` keeps named H2 blocks, `drop` removes them -- so the quick guide reuses
+# the same source text instead of duplicating it and drifting out of step.
+QUICK = [
+    ('03-setup', 'Powering the arm on', {'only': ['Powering the arm on']}),
+    ('04-running', 'Running and stopping', {}),
+    # The operator-frame diagram is cut: the control table already says "your
+    # left" and "away from you", so on a short handout the picture restates it
+    # rather than adding anything. Re-mapping is a developer concern.
+    ('05-joystick', 'Joystick controls',
+     {'drop': ['Directions are from where you stand', 'Re-mapping']}),
+]
 
 # Colour emoji need a colour-emoji font that print backends rarely have, and a
 # missing glyph in the status-light table would destroy the one thing that table
 # exists to convey. Swap them for markup that carries the same meaning.
 LED = {'\U0001F535': 'blue', '\U0001F7E2': 'green',
        '\U0001F7E1': 'yellow', '\U0001F534': 'red'}
-GLYPH = {'⚠️': '⚠', '✅': '✔', '\U0001F4C4': ''}
+GLYPH = {'⚠️': '⚠', '✅': '✔', '\U0001F4C4': '', '⬇': ''}
 
 
 def is_nav(line):
@@ -59,16 +76,35 @@ def is_nav(line):
             and ('←' in s or '→' in s or 'Contents](' in s))
 
 
-def prepare(name):
-    """Read one topic, strip its navigation, and retarget cross-links."""
+def select(text, only=None, drop=None):
+    """Keep or remove whole `## ` blocks of a topic."""
+    if not only and not drop:
+        return text
+    parts = re.split(r'(?m)^(## .*)$', text)
+    # With `only`, the preamble introduces the whole topic, so it goes too.
+    out = [] if only else [parts[0]]
+    for i in range(1, len(parts) - 1, 2):
+        head, body = parts[i], parts[i + 1]
+        name = head[3:].strip()
+        if only is not None and name not in only:
+            continue
+        if drop and name in drop:
+            continue
+        out.append(head + body)
+    return '\n'.join(out)
+
+
+def prepare(name, included, only=None, drop=None):
+    """Read one topic, strip navigation, select blocks, retarget cross-links."""
     text = io.open(os.path.join(HERE, name + '.md'), encoding='utf-8').read()
     text = '\n'.join(l for l in text.split('\n') if not is_nav(l))
+    text = select(text, only, drop)
 
-    # Links to a section that IS in the PDF become internal jumps. Links to one
-    # that is not would be dead anchors, so unwrap them to plain text and say so.
+    # Links to a section that IS in this PDF become internal jumps. Links to one
+    # that is not would be dead anchors, so unwrap them and mark them.
     def unwrap(m):
         label, target = m.group(1), m.group(2)
-        return m.group(0) if target in INCLUDED else f'{label} (online)'
+        return m.group(0) if target in included else f'{label} (online)'
     text = re.sub(r'\[([^\]]+)\]\((\d\d-[a-z-]+)\.md(?:#[^)]*)?\)', unwrap, text)
     text = re.sub(r'\]\((\d\d-[a-z-]+)\.md(?:#[^)]*)?\)', r'](#\1)', text)
     text = text.replace('](README.md)', '](#contents)')
@@ -79,7 +115,6 @@ def prepare(name):
         text = text.replace(emoji, repl)
 
     html = markdown.markdown(text, extensions=['tables', 'attr_list', 'sane_lists'])
-    # Drop the leading <h1>; the section header below carries the title.
     html = re.sub(r'^<h1>.*?</h1>', '', html, count=1, flags=re.S)
     return html
 
@@ -130,18 +165,19 @@ a { color: #0C6B74; text-decoration: none; }
 .led.blue { background: #2E7CF6; } .led.green { background: #22B467; }
 .led.yellow { background: #E0B400; } .led.red { background: #D6301F; }
 
-.cover { page-break-after: always; padding-top: 42mm; }
+.cover { page-break-after: always; padding-top: 34mm; }
 .cover .kicker { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt;
                  letter-spacing: 1.6pt; text-transform: uppercase; color: #0C6B74;
                  margin-bottom: 6mm; }
 .cover h1 { font-size: 27pt; line-height: 1.1; margin: 0 0 6mm; letter-spacing: -0.5pt; }
 .cover .sub { font-size: 11.5pt; color: #44585E; max-width: 125mm; line-height: 1.5; }
-.cover .meta { margin-top: 14mm; font-family: "DejaVu Sans Mono", monospace;
+.cover .meta { margin-top: 11mm; font-family: "DejaVu Sans Mono", monospace;
                font-size: 8.5pt; color: #5E7177; line-height: 1.9;
                border-top: 0.4mm solid #16242A; padding-top: 4mm; }
-.cover .warn { margin-top: 10mm; padding: 4mm; background: #FBE7E4;
+.cover .warn { margin-top: 9mm; padding: 4mm; background: #FBE7E4;
                border-left: 1mm solid #A81F14; font-size: 9.5pt; }
-.cover .tail { margin-top: 8mm; font-size: 8.3pt; color: #7A8C92; line-height: 1.5; }
+.cover .warn ul { margin: 2mm 0 0; padding-left: 4.5mm; }
+.cover .tail { margin-top: 7mm; font-size: 8.3pt; color: #7A8C92; line-height: 1.5; }
 
 .toc { page-break-after: always; }
 .toc h2 { border-bottom: 0.4mm solid #16242A; padding-bottom: 2mm; }
@@ -157,47 +193,77 @@ section > .shead .n { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5
 section > .shead h2 { margin: 1mm 0 0; }
 """
 
+# The quick guide omits the safety section, so the essentials ride on its cover.
+# A handout that explains how to move a robot arm and nothing about stopping it
+# is not a shorter document, it is an incomplete one.
+SAFETY_BOX = (
+    '<div class="warn"><b>The arm is position controlled and does not feel you.</b> '
+    'It will not stop for your hand, the bench, or the phantom.'
+    '<ul>'
+    '<li>Hold <b>L1</b> or nothing moves. Release it and the arm stops &mdash; '
+    'that is your first reflex, not the emergency stop.</li>'
+    '<li>Keep the <b>red emergency stop</b> on the base within reach. Press to '
+    'stop, rotate to release.</li>'
+    '<li>Nobody puts a hand inside the arm&rsquo;s 450&nbsp;mm reach while it is '
+    'running.</li>'
+    '</ul></div>')
 
-def main():
+
+def build(spec, out_name, kicker, title, subtitle, tail):
+    included = {name for name, _, _ in spec}
     parts = [f'<style>{CSS}</style>']
 
     parts.append(
         '<div class="cover">'
-        '<div class="kicker">Exhibition operating manual &nbsp;&middot;&nbsp; sections 1-7</div>'
-        '<h1>Dobot Magician E6<br>ultrasound teleoperation</h1>'
-        '<div class="sub">How to connect, run, drive and pack down the arm for '
-        'live probe-on-phantom demonstrations. Written for engineers who have not '
-        'worked with a robot arm before.</div>'
-        '<div class="warn"><b>The arm is position controlled and does not feel you.</b> '
-        'It will not stop for your hand, the bench, or the phantom. Keep the '
-        'emergency stop within reach and read section 1 first.</div>'
+        f'<div class="kicker">{kicker}</div>'
+        f'<h1>{title}</h1>'
+        f'<div class="sub">{subtitle}</div>'
+        f'{SAFETY_BOX}'
         '<div class="meta">'
         'Robot &nbsp;Dobot Magician E6<br>'
         'Controller &nbsp;PS5 DualSense<br>'
-        'Stack &nbsp;ROS 2 Humble + MoveIt Servo<br>'
         'Arm address &nbsp;192.168.5.1<br>'
         'Revision &nbsp;2026-10-04'
         '</div>'
-        '<div class="tail">Sections 8 (Running on Windows) and 9 (Reference) are '
-        'developer material and are kept in the repository rather than here: '
-        'github.com/k211/DOBOT-NSL</div>'
+        f'<div class="tail">{tail}</div>'
         '</div>')
 
     toc = ['<div class="toc" id="contents"><h2>Contents</h2><ol>']
-    for i, (_, title) in enumerate(TOPICS, 1):
-        toc.append(f'<li><span class="n">{i:02d}</span>{title}</li>')
+    for i, (_, title_i, _) in enumerate(spec, 1):
+        toc.append(f'<li><span class="n">{i:02d}</span>{title_i}</li>')
     toc.append('</ol></div>')
     parts.append(''.join(toc))
 
-    for i, (name, title) in enumerate(TOPICS, 1):
+    for i, (name, title_i, opts) in enumerate(spec, 1):
+        body = prepare(name, included, opts.get('only'), opts.get('drop'))
         parts.append(
             f'<section id="{name}">'
             f'<div class="shead"><span class="n">SECTION {i:02d}</span>'
-            f'<h2>{title}</h2></div>{prepare(name)}</section>')
+            f'<h2>{title_i}</h2></div>{body}</section>')
 
-    HTML(string=''.join(parts), base_url=HERE).write_pdf(OUT)
-    size = os.path.getsize(OUT)
-    print(f'wrote {OUT}  ({size/1024:.0f} kB)')
+    out = os.path.join(HERE, out_name)
+    HTML(string=''.join(parts), base_url=HERE).write_pdf(out)
+    print(f'wrote {out_name}  ({os.path.getsize(out)/1024:.0f} kB)')
+
+
+def main():
+    build(FULL, 'E6-Exhibition-Manual.pdf',
+          'Exhibition operating manual &nbsp;&middot;&nbsp; sections 1-7',
+          'Dobot Magician E6<br>ultrasound teleoperation',
+          'How to connect, run, drive and pack down the arm for live '
+          'probe-on-phantom demonstrations. Written for engineers who have not '
+          'worked with a robot arm before.',
+          'Sections 8 (Running on Windows) and 9 (Reference) are developer '
+          'material and are kept in the repository rather than here: '
+          'github.com/k211/DOBOT-NSL')
+
+    build(QUICK, 'E6-Quick-Guide.pdf',
+          'Quick guide &nbsp;&middot;&nbsp; power on, run, drive',
+          'Dobot Magician E6<br>quick guide',
+          'The short version: switch the arm on, start the program, and drive it. '
+          'For the operator on the day.',
+          'Unpacking and packing, the status lights, scanning with the probe and '
+          'troubleshooting are in the full manual: github.com/k211/DOBOT-NSL')
 
 
 if __name__ == '__main__':

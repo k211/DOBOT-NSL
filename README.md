@@ -10,8 +10,13 @@ operator feels gamepad rumble as the arm approaches a kinematic singularity.
 
 Everything operational lives in **[`docs/`](docs/)**.
 
-**[⬇ Download the manual as a PDF](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** — sections 1–7 in one file, for
-sharing or printing. Send that link to anyone who needs to operate the arm.
+| Download | Covers | Pages |
+|---|---|---|
+| **[⬇ Quick guide](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Quick-Guide.pdf)** | Power on, run, drive. For the operator on the day | 7 |
+| **[⬇ Full manual](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** | Sections 1–7: safety, lights, setup, running, joystick, the probe, faults | 19 |
+
+Send either link to anyone who needs to operate the arm — both download
+directly, no account needed.
 
 | | |
 |---|---|
