@@ -97,7 +97,7 @@ Default layout, matching the Linux stack:
 | Control | Motion |
 |---|---|
 | L1 | deadman — hold or nothing moves |
-| R1 | turbo ×1.5 |
+| R1 | turbo ×1.8 — operator only |
 | D-pad ◄ ► | translate operator left / right |
 | D-pad ▲ ▼ | translate away from / toward operator |
 | Left stick ↑↓ | up / down |

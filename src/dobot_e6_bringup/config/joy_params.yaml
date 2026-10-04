@@ -43,5 +43,6 @@ joy_to_servo_node:
     scale_linear: 0.03      # was 0.05 m/s
     scale_angular: 0.2      # was 0.3 rad/s — roll and pitch trims
     scale_angular_yaw: 0.3  # yaw gets its own, faster rate
-    scale_turbo: 1.5        # was 3.0
+    # Turbo is an OPERATOR control, not a visitor one -- see docs/01-safety.md.
+    scale_turbo: 1.8        # was 3.0, then 1.5
     frame_id: base_link

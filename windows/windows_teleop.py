@@ -78,7 +78,7 @@ RATE_HZ = 33.0                  # Dobot advises >= 30 ms between ServoP commands
 LIN_MM_S = 30.0                 # 0.03 m/s, matching the ROS stack
 ROLL_PITCH_DEG_S = 12.0         # 0.2 rad/s
 YAW_DEG_S = 17.0                # 0.3 rad/s
-TURBO_FACTOR = 1.5
+TURBO_FACTOR = 1.8
 
 # Gamepad indices -- MEASURED ON LINUX. Re-measure with --map on Windows.
 BTN_DEADMAN = 4                 # L1

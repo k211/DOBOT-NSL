@@ -109,7 +109,7 @@ class JoyToServo(Node):
         self.declare_parameter('scale_linear', 0.03)
         self.declare_parameter('scale_angular', 0.2)
         self.declare_parameter('scale_angular_yaw', 0.3)
-        self.declare_parameter('scale_turbo', 1.5)
+        self.declare_parameter('scale_turbo', 1.8)
         self.declare_parameter('frame_id', 'base_link')
 
         self._pub = self.create_publisher(

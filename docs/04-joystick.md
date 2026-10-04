@@ -20,7 +20,7 @@ point of view, standing in front of the arm and facing it.
 | **Right stick ▲▼** | **Yaw** — twist about vertical | 0.3 rad/s | proportional |
 | **□ / ○** | **Pitch** — tilt the probe nose | 0.2 rad/s | full rate or nothing |
 | **△ / ✕** | **Roll** — rotate about the probe axis | 0.2 rad/s | full rate or nothing |
-| **R1** (with L1) | **Turbo** | ×1.5 | hold |
+| **R1** (with L1) | **Turbo** — *operator only, see [§1](01-safety.md)* | ×1.8 | hold |
 | **L1 + L2 + R2** | **Home** — return to the safe pose | slow | hold 1 s |
 | L2 or R2 alone | Nothing | — | — |
 | PS button | Nothing — **not visible to the software** | — | — |

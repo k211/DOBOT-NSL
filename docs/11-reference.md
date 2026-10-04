@@ -64,7 +64,7 @@ the workspace is symlink-installed.
 | `scale_linear` | 0.03 | Translation speed, m/s |
 | `scale_angular` | 0.2 | Roll and pitch rate, rad/s |
 | `scale_angular_yaw` | 0.3 | Yaw rate, rad/s |
-| `scale_turbo` | 1.5 | Turbo multiplier — **set to 1.0 to disable turbo for public use** |
+| `scale_turbo` | 1.8 | Turbo multiplier, **operator only**. Set to 1.0 to remove turbo entirely |
 
 ## Servo thresholds
 
