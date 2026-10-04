@@ -7,6 +7,7 @@ log/
 vendor/
 
 # python
+.venv/
 __pycache__/
 *.pyc
 

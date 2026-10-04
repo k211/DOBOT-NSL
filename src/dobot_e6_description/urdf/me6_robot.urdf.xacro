@@ -12,7 +12,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/base_link.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/base_link.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -21,7 +21,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/base_link.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/base_link.STL" />
             </geometry>
         </collision>
     </link>
@@ -46,7 +46,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link1.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link1.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -55,7 +55,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link1.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link1.STL" />
             </geometry>
         </collision>
     </link>
@@ -77,7 +77,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link2.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link2.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -86,7 +86,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link2.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link2.STL" />
             </geometry>
         </collision>
     </link>
@@ -108,7 +108,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link3.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link3.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -117,7 +117,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link3.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link3.STL" />
             </geometry>
         </collision>
     </link>
@@ -139,7 +139,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link4.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link4.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -148,7 +148,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link4.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link4.STL" />
             </geometry>
         </collision>
     </link>
@@ -170,7 +170,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link5.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link5.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -179,7 +179,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link5.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link5.STL" />
             </geometry>
         </collision>
     </link>
@@ -201,7 +201,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link6.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link6.STL" />
             </geometry>
             <material name="">
                 <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
@@ -210,7 +210,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find dobot_e6_description)/meshes/me6/Link6.STL" />
+                <mesh filename="package://dobot_e6_description/meshes/me6/Link6.STL" />
             </geometry>
         </collision>
     </link>

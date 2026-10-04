@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Graduated haptic feedback driven by the Jacobian condition number.
 
@@ -38,6 +38,7 @@ TUNING: watch 'cond_i= / joint_i= / intensity= / active=' in the log.
 """
 
 import math
+import os
 import xml.etree.ElementTree as ET
 
 import numpy as np
@@ -49,7 +50,22 @@ from rclpy.qos import QoSProfile, DurabilityPolicy
 from std_msgs.msg import String
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import WrenchStamped
-from moveit_msgs.msg import ServoStatus
+if os.environ.get('ROS_DISTRO') == 'humble':
+    # MoveIt Servo 2.5 publishes std_msgs/Int8. Newer releases publish the
+    # strongly typed moveit_msgs/ServoStatus message.
+    from std_msgs.msg import Int8 as ServoStatusMsg
+
+    class ServoStatus:
+        NO_WARNING = 0
+        DECELERATE_FOR_APPROACHING_SINGULARITY = 1
+        HALT_FOR_SINGULARITY = 2
+        DECELERATE_FOR_COLLISION = 3
+        HALT_FOR_COLLISION = 4
+        JOINT_BOUND = 5
+        DECELERATE_FOR_LEAVING_SINGULARITY = 6
+else:
+    from moveit_msgs.msg import ServoStatus as ServoStatusMsg
+    ServoStatus = ServoStatusMsg
 
 import evdev
 from evdev import ecodes, ff
@@ -151,7 +167,7 @@ class HapticFeedback(Node):
         qos = QoSProfile(depth=1)
         qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
         self.create_subscription(String,      '/robot_description', self._urdf_cb,  qos)
-        self.create_subscription(ServoStatus, '/servo_node/status', self._servo_cb, 10)
+        self.create_subscription(ServoStatusMsg, '/servo_node/status', self._servo_cb, 10)
         self.create_subscription(JointState,  '/joint_states',      self._joint_cb, 10)
         self.create_subscription(WrenchStamped, '/ft_sensor/wrench', self._ft_cb,   10)
         self.create_timer(0.1, self._tick)
@@ -269,8 +285,8 @@ class HapticFeedback(Node):
 
     # ── callbacks ─────────────────────────────────────────────────────────────
 
-    def _servo_cb(self, msg: ServoStatus):
-        self._servo_code = msg.code
+    def _servo_cb(self, msg: ServoStatusMsg):
+        self._servo_code = msg.data if hasattr(msg, 'data') else msg.code
 
     def _ft_cb(self, msg: WrenchStamped):
         # Magnitude of the contact force; ramp from FORCE_THRESHOLD..FORCE_MAX.

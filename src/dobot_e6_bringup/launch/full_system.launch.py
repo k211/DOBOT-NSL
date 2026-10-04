@@ -1,4 +1,5 @@
 import os
+import xacro
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, OpaqueFunction, RegisterEventHandler, TimerAction
 from launch.event_handlers import OnProcessExit
@@ -13,7 +14,11 @@ from ament_index_python.packages import get_package_share_directory
 
 def launch_setup(context, *args, **kwargs):
     bringup_dir = get_package_share_directory('dobot_e6_bringup')
-    servo_params_file = os.path.join(bringup_dir, 'config', 'servo_params.yaml')
+    # MoveIt Servo changed its parameter schema after Humble.
+    servo_config = ('servo_params_humble.yaml'
+                    if os.environ.get('ROS_DISTRO') == 'humble'
+                    else 'servo_params.yaml')
+    servo_params_file = os.path.join(bringup_dir, 'config', servo_config)
     servo_moveit_params_file = os.path.join(bringup_dir, 'config', 'servo_moveit_params.yaml')
     joy_params_file = os.path.join(bringup_dir, 'config', 'joy_params.yaml')
     controllers_file = os.path.join(bringup_dir, 'config', 'ros2_controllers.yaml')
@@ -23,13 +28,16 @@ def launch_setup(context, *args, **kwargs):
     # "home" pose (all-zeros is a real singularity on the ME6 — cond number = inf),
     # so unlike the Kinova the arm never spawns singular; home_arm below is then
     # just a fast no-op move that still gates servo/box startup ordering.
-    robot_description = Command([
-        PathJoinSubstitution([FindExecutable(name='xacro')]),
-        ' ',
+    # Use xacro's Python API instead of launch Command: the latter invokes a
+    # shell and splits workspace paths containing spaces (for example,
+    # "Dobot arm") into multiple arguments.
+    robot_description = xacro.process_file(
         os.path.join(bringup_dir, 'robots', 'probe_wrapper_e6.urdf.xacro'),
-        ' simulation_controllers:=', controllers_file,
-        ' initial_positions_file:=', initial_positions_file,
-    ]).perform(context)
+        mappings={
+            'simulation_controllers': controllers_file,
+            'initial_positions_file': initial_positions_file,
+        },
+    ).toxml()
 
     # --- 1. Sim bring-up (Gazebo Harmonic, mirrors kortex_sim_control) ---
     robot_state_publisher = Node(
@@ -39,12 +47,13 @@ def launch_setup(context, *args, **kwargs):
         parameters=[{'robot_description': robot_description, 'use_sim_time': True}],
     )
 
+    gz_args = (' -s -r -v 3 empty.sdf'
+               if os.environ.get('ROS_DISTRO') == 'humble'
+               else ' -s -r -v 3 empty.sdf --physics-engine gz-physics-bullet-featherstone-plugin')
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             get_package_share_directory('ros_gz_sim'), '/launch/gz_sim.launch.py']),
-        launch_arguments={
-            'gz_args': ' -s -r -v 3 empty.sdf --physics-engine gz-physics-bullet-featherstone-plugin'
-        }.items(),
+        launch_arguments={'gz_args': gz_args}.items(),
     )
 
     # URDF world_joint fixes the model to the world at z=0.03, so spawn at origin.
