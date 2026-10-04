@@ -4,18 +4,44 @@ joy_node:
     deadzone: 0.1
     autorepeat_rate: 20.0
     coalesce_interval_ms: 1
+
 joy_to_servo_node:
   ros__parameters:
-    axis_linear_x: 1
-    axis_linear_y: 0
-    axis_angular_yaw: 2
-    axis_angular_pitch: 3
-    axis_l2: 4
-    axis_r2: 5
-    enable_button: 9
-    enable_turbo_button: 10
+    # Indices MEASURED on this laptop's DualSense via ROS joy_node (not assumed
+    # from the kernel, which disagrees on D-pad sign). Full table and the
+    # operator-frame derivation are in joy_to_servo.py's module docstring.
+    #
+    # Layout: operator stands in front of the arm, facing it.
+    #   D-pad    -> translate in the operator's X/Y
+    #   L stick  -> translate up/down
+    #   R stick  -> yaw (own, faster scale)
+    #   [] / O   -> pitch
+    #   /\ / X   -> roll
+    #   L1 / R1  -> deadman / turbo        L2, R2 -> unused
+
+    # --- linear ---
+    axis_dpad_lr: 6         # ABS_HAT0X  D-pad; joy reports LEFT = +1
+    axis_dpad_ud: 7         # ABS_HAT0Y  D-pad; joy reports UP   = +1
+    dpad_lr_to_x: 1.0       # LEFT (+1) -> +X, because operator-left is +X
+    dpad_ud_to_y: -1.0      # UP   (+1) -> -Y, because operator-forward is -Y
+    axis_linear_z: 1        # ABS_Y   left stick, vertical; joy reports UP = +1
+    linear_z_sign: 1.0      # stick UP -> +Z (up)
+
+    # --- angular ---
+    axis_angular_yaw: 4     # ABS_RY  right stick, vertical
+    angular_yaw_sign: 1.0   # stick UP (+1) -> +Z, turns toward operator's left
+    button_roll_plus: 2     # triangle
+    button_roll_minus: 0    # cross
+    button_pitch_plus: 3    # square
+    button_pitch_minus: 1   # circle
+
+    enable_button: 4        # BTN_TL  L1 deadman
+    enable_turbo_button: 5  # BTN_TR  R1 turbo
+
     # E6 reach is 0.45 m (vs 0.9 m Gen3) — halve linear speed vs the Kinova.
-    scale_linear: 0.05
-    scale_angular: 0.3
-    scale_turbo: 3.0
+    # Reduced further for first-run familiarisation; comments show prior values.
+    scale_linear: 0.03      # was 0.05 m/s
+    scale_angular: 0.2      # was 0.3 rad/s — roll and pitch trims
+    scale_angular_yaw: 0.3  # yaw gets its own, faster rate
+    scale_turbo: 1.5        # was 3.0
     frame_id: base_link
