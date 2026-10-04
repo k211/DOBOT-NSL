@@ -8,8 +8,10 @@ operator feels gamepad rumble as the arm approaches a kinematic singularity.
 
 ## Documentation
 
-Everything operational lives in **[`docs/`](docs/)**. Take the
-**[single-file PDF](docs/E6-Exhibition-Manual.pdf)** to share or print.
+Everything operational lives in **[`docs/`](docs/)**.
+
+**[⬇ Download the manual as a PDF](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** — sections 1–7 in one file, for
+sharing or printing. Send that link to anyone who needs to operate the arm.
 
 | | |
 |---|---|

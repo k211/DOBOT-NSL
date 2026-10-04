@@ -4,8 +4,14 @@
     ../.venv/bin/python build_pdf.py
 
 The Markdown files are the source of truth -- they are what people read on
-GitHub, with working links between topics. This script stitches them into one
-printable document for sharing with people who will not clone the repository.
+GitHub, with working links between topics. This script stitches the OPERATING
+sections into one printable document for sharing with people who will not clone
+the repository.
+
+Sections 8 (Running on Windows) and 9 (Reference) are deliberately left out of
+the PDF. They are developer material, they change far more often than the
+operating procedure, and a handout that goes stale is worse than one that is
+honestly scoped. They stay in the repository as Markdown.
 
 Requires `weasyprint` and `markdown` (both pip-installable). WeasyPrint is used
 rather than pandoc because the diagrams are SVG, and it rasterises them properly
@@ -23,7 +29,8 @@ from weasyprint import HTML
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'E6-Exhibition-Manual.pdf')
 
-TOPICS = [
+# Every section, in order. Only PDF_TOPICS is printed.
+ALL_TOPICS = [
     ('01-safety', 'Safety and the emergency stop'),
     ('02-status-lights', 'Status lights'),
     ('03-setup', 'Unpacking, packing and connecting'),
@@ -34,6 +41,8 @@ TOPICS = [
     ('08-windows', 'Running on Windows'),
     ('09-reference', 'Reference'),
 ]
+TOPICS = ALL_TOPICS[:7]          # sections 1-7: the operating manual
+INCLUDED = {name for name, _ in TOPICS}
 
 # Colour emoji need a colour-emoji font that print backends rarely have, and a
 # missing glyph in the status-light table would destroy the one thing that table
@@ -55,7 +64,12 @@ def prepare(name):
     text = io.open(os.path.join(HERE, name + '.md'), encoding='utf-8').read()
     text = '\n'.join(l for l in text.split('\n') if not is_nav(l))
 
-    # Cross-topic links become internal PDF jumps rather than dead .md paths.
+    # Links to a section that IS in the PDF become internal jumps. Links to one
+    # that is not would be dead anchors, so unwrap them to plain text and say so.
+    def unwrap(m):
+        label, target = m.group(1), m.group(2)
+        return m.group(0) if target in INCLUDED else f'{label} (online)'
+    text = re.sub(r'\[([^\]]+)\]\((\d\d-[a-z-]+)\.md(?:#[^)]*)?\)', unwrap, text)
     text = re.sub(r'\]\((\d\d-[a-z-]+)\.md(?:#[^)]*)?\)', r'](#\1)', text)
     text = text.replace('](README.md)', '](#contents)')
 
@@ -127,6 +141,7 @@ a { color: #0C6B74; text-decoration: none; }
                border-top: 0.4mm solid #16242A; padding-top: 4mm; }
 .cover .warn { margin-top: 10mm; padding: 4mm; background: #FBE7E4;
                border-left: 1mm solid #A81F14; font-size: 9.5pt; }
+.cover .tail { margin-top: 8mm; font-size: 8.3pt; color: #7A8C92; line-height: 1.5; }
 
 .toc { page-break-after: always; }
 .toc h2 { border-bottom: 0.4mm solid #16242A; padding-bottom: 2mm; }
@@ -148,7 +163,7 @@ def main():
 
     parts.append(
         '<div class="cover">'
-        '<div class="kicker">Exhibition operating manual</div>'
+        '<div class="kicker">Exhibition operating manual &nbsp;&middot;&nbsp; sections 1-7</div>'
         '<h1>Dobot Magician E6<br>ultrasound teleoperation</h1>'
         '<div class="sub">How to connect, run, drive and pack down the arm for '
         'live probe-on-phantom demonstrations. Written for engineers who have not '
@@ -162,7 +177,11 @@ def main():
         'Stack &nbsp;ROS 2 Humble + MoveIt Servo<br>'
         'Arm address &nbsp;192.168.5.1<br>'
         'Revision &nbsp;2026-10-04'
-        '</div></div>')
+        '</div>'
+        '<div class="tail">Sections 8 (Running on Windows) and 9 (Reference) are '
+        'developer material and are kept in the repository rather than here: '
+        'github.com/k211/DOBOT-NSL</div>'
+        '</div>')
 
     toc = ['<div class="toc" id="contents"><h2>Contents</h2><ol>']
     for i, (_, title) in enumerate(TOPICS, 1):
