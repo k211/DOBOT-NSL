@@ -8,23 +8,30 @@ aborted motion says WHY instead of silently stopping.
 Run with real_hw.launch.py STOPPED (needs the 29999 dashboard socket):
 
     python3 src/dobot_e6_hw/scripts/go_home.py [robot_ip]
+    python3 src/dobot_e6_hw/scripts/go_home.py --speed 5    # slower still
+
+Speed is deliberately low by default: this is the move you run when you do not
+know where the arm is, so it should be slow enough to hit the E-Stop during.
+Effective rate = --global x --speed (both percentages of the controller's
+configured joint speed), so the defaults below are ~5% of full speed.
 """
 
+import argparse
 import math
 import re
 import sys
 import time
 
 from dobot_api import DobotApiDashboard
-
-# Max-margin pose from a Pinocchio kappa scan of the URDF: kappa≈16.5 vs 36
-# for the old SRDF "home" (Servo singularity threshold is 60). Elbow bent,
-# wrist bent, tool pointing down, arm toward +Y — same side as the old home.
-HOME_RAD = [0.0, 0.0, 1.84, 0.0, -1.38, 0.0]
+from home_pose import (HOME_ACCEL_RATIO, HOME_GLOBAL_SPEED, HOME_RAD,
+                       HOME_SPEED_RATIO, HOME_TIMEOUT_SEC, home_deg)
 
 MODE = {1: 'INIT', 2: 'BRAKE_OPEN', 3: 'POWEROFF', 4: 'DISABLED', 5: 'IDLE',
         6: 'DRAG', 7: 'RUNNING', 8: 'SINGLE_MOVE', 9: 'ERROR', 10: 'PAUSE', 11: 'JOG'}
-TIMEOUT_SEC = 90
+SPEED_RATIO  = HOME_SPEED_RATIO
+ACCEL_RATIO  = HOME_ACCEL_RATIO
+GLOBAL_SPEED = HOME_GLOBAL_SPEED
+TIMEOUT_SEC  = HOME_TIMEOUT_SEC
 
 
 def braces(reply):
@@ -34,7 +41,11 @@ def braces(reply):
 
 
 def mode_of(dash):
-    return int(braces(dash.RobotMode()))
+    b = braces(dash.RobotMode())
+    if b is None:
+        sys.exit('Robot not answering in TCP mode — RequestControl() did not take. '
+                 'Check the arm is powered (steady blue) and pingable.')
+    return int(b)
 
 
 def angles_of(dash):
@@ -42,16 +53,38 @@ def angles_of(dash):
 
 
 def main():
-    ip = sys.argv[1] if len(sys.argv) > 1 else '192.168.5.1'
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument('robot_ip', nargs='?', default='192.168.5.1')
+    ap.add_argument('--speed', type=int, default=SPEED_RATIO,
+                    help=f'MovJ speed ratio 1-100 (default {SPEED_RATIO})')
+    ap.add_argument('--accel', type=int, default=ACCEL_RATIO,
+                    help=f'MovJ acceleration ratio 1-100 (default {ACCEL_RATIO})')
+    ap.add_argument('--global-speed', type=int, default=GLOBAL_SPEED,
+                    dest='global_speed',
+                    help=f'SpeedFactor global ratio 1-100 (default {GLOBAL_SPEED})')
+    args = ap.parse_args()
+    for name in ('speed', 'accel', 'global_speed'):
+        v = getattr(args, name)
+        if not 1 <= v <= 100:
+            ap.error(f'--{name.replace("_", "-")} must be in 1..100, got {v}')
+
+    ip = args.robot_ip
     dash = DobotApiDashboard(ip, 29999)
     dash.socket_dobot.settimeout(7.0)
+
+    # A freshly powered controller rejects every command with 'Control Mode Is
+    # Not Tcp' until a client claims control. This is the Linux-native
+    # equivalent of flipping the mode in DobotStudio Pro, and it has to be
+    # re-sent after each power cycle.
+    print('RequestControl →', dash.RequestControl().strip())
 
     print('mode:', MODE.get(mode_of(dash)), ' errors:', braces(dash.GetErrorID()))
     print('ClearError →', dash.ClearError().strip())
     res = dash.EnableRobot()   # load=0 kg — no payload check to fail
     print('EnableRobot →', res.strip())
     if not res.strip().startswith('0'):
-        sys.exit('Enable refused — check E-Stop / TCP mode in DobotStudio Pro')
+        sys.exit('Enable refused — check the E-Stop is released and that '
+                 'RequestControl() succeeded above')
 
     for _ in range(10):        # wait for IDLE; flush a leftover PAUSEd queue
         m = mode_of(dash)
@@ -62,9 +95,21 @@ def main():
         time.sleep(0.5)
     print('mode:', MODE.get(mode_of(dash)))
 
-    target = [round(math.degrees(q), 1) for q in HOME_RAD]
+    print(f'SpeedFactor({args.global_speed}) →',
+          dash.SpeedFactor(args.global_speed).strip())
+
+    target = home_deg()
     print('controller angles now:', angles_of(dash), ' target:', target)
-    res = dash.MovJ(*target, 1, v=20).strip()
+    print(f'moving at v={args.speed} a={args.accel} '
+          f'x global {args.global_speed}% '
+          f'(~{args.speed * args.global_speed / 100.0:.1f}% of full speed)')
+    # The arm is enabled and brakes are off by this point, so the motion can
+    # begin the instant MovJ lands. Count down first: an unannounced move is
+    # alarming when you are standing next to the arm.
+    for n in range(3, 0, -1):
+        print(f'  moving in {n}…', flush=True)
+        time.sleep(1.0)
+    res = dash.MovJ(*target, 1, a=args.accel, v=args.speed).strip()
     print('MovJ →', res)
     if not res.startswith('0'):
         sys.exit('MovJ rejected — mode above must be IDLE. If it is stuck in PAUSE '

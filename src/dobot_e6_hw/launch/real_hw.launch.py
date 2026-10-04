@@ -4,9 +4,11 @@ Same ROS graph as full_system.launch.py above the robot layer; the bottom layer
 (Gazebo + JTC) is replaced by dobot_tcp_node. No FT sensor yet: the contact cue
 needs the external wrist F/T sensor (§0.5) publishing on /ft_sensor/wrench.
 
-Robot must be in TCP/IP secondary-development mode (DobotStudio Pro) first.
+The TCP node claims control authority itself via RequestControl() at startup,
+so no DobotStudio Pro session is required.
 """
 import os
+import xacro
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction, TimerAction
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
@@ -17,7 +19,10 @@ from ament_index_python.packages import get_package_share_directory
 
 def launch_setup(context, *args, **kwargs):
     bringup_dir = get_package_share_directory('dobot_e6_bringup')
-    servo_params_file = os.path.join(bringup_dir, 'config', 'servo_params.yaml')
+    servo_config = ('servo_params_humble.yaml'
+                    if os.environ.get('ROS_DISTRO') == 'humble'
+                    else 'servo_params.yaml')
+    servo_params_file = os.path.join(bringup_dir, 'config', servo_config)
     servo_moveit_params_file = os.path.join(bringup_dir, 'config', 'servo_moveit_params.yaml')
     joy_params_file = os.path.join(bringup_dir, 'config', 'joy_params.yaml')
     controllers_file = os.path.join(bringup_dir, 'config', 'ros2_controllers.yaml')
@@ -25,13 +30,13 @@ def launch_setup(context, *args, **kwargs):
     robot_ip = LaunchConfiguration('robot_ip').perform(context)
 
     # Same wrapper xacro as sim: gazebo/ros2_control tags are inert without gz.
-    robot_description = Command([
-        PathJoinSubstitution([FindExecutable(name='xacro')]),
-        ' ',
+    robot_description = xacro.process_file(
         os.path.join(bringup_dir, 'robots', 'probe_wrapper_e6.urdf.xacro'),
-        ' simulation_controllers:=', controllers_file,
-        ' initial_positions_file:=', initial_positions_file,
-    ]).perform(context)
+        mappings={
+            'simulation_controllers': controllers_file,
+            'initial_positions_file': initial_positions_file,
+        },
+    ).toxml()
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -68,7 +73,10 @@ def launch_setup(context, *args, **kwargs):
                             servo_params_file,
                             servo_moveit_params_file,
                             {'robot_description': robot_description,
-                             'use_sim_time': False},
+                             'use_sim_time': False,
+                             **({'moveit_servo.use_gazebo': False}
+                                if os.environ.get('ROS_DISTRO') == 'humble'
+                                else {})},
                         ],
                     ),
                 ],
