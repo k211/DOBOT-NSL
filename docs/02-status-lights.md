@@ -15,7 +15,7 @@ to know what the arm is doing.
 | 🟢 **Green, slow flash** | Running under remote commands | **Normal while teleop is live** |
 | 🟢 **Green, fast flash** | Jogging, drag mode, or recording | Not used by this setup — investigate |
 | 🟡 **Yellow** | Joint brakes engaged while disabled | Usually harmless; enable or restart |
-| 🔴 **Red, steady** | **Alarm, or collision detected** | Stop. [Troubleshooting →](08-troubleshooting.md) |
+| 🔴 **Red, steady** | **Alarm, or collision detected** | Stop. [Troubleshooting →](07-troubleshooting.md) |
 
 Fast flash is about 5 per second, slow about 1 per second.
 
@@ -27,12 +27,14 @@ Fast flash is about 5 per second, slow about 1 per second.
 | **Slow-flashing green** | Program running, arm under your control |
 
 Anything **red** means an alarm — stop and read
-[Troubleshooting](08-troubleshooting.md).
+[Troubleshooting](07-troubleshooting.md).
 
 > The blue and green meanings are confirmed on this arm. The exact yellow and red
 > pairings were read from a table in the manufacturer's PDF and may differ
 > slightly on your unit — but any red light means an alarm, which is all you need
 > in order to act.
+
+---
 
 ---
 

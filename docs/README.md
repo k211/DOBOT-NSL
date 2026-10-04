@@ -47,18 +47,17 @@ a further 25 seconds for calibration. [§4](04-running.md)
 | | |
 |---|---|
 | **[6. The probe: payload and contact force](06-scanning.md)** | Fitting the probe, and what happens when it presses on the phantom |
-| **[7. Joint limits and singularities](07-limits.md)** | What the arm does at its limits, and when a restart is needed |
 
 ### When things go wrong
 | | |
 |---|---|
-| **[8. Troubleshooting](08-troubleshooting.md)** | Symptom table, the full restart, health checks |
+| **[7. Limits, faults and recovery](07-troubleshooting.md)** | Why a stopped arm is usually normal, symptom table, the full restart |
 
 ### Other machines
 | | |
 |---|---|
-| **[9. Running on Windows](09-windows.md)** | The ROS-free teleop, and what it gives up |
-| **[10. Reference](10-reference.md)** | Specs, network, home pose, file locations, tuning |
+| **[8. Running on Windows](08-windows.md)** | The ROS-free teleop, and what it gives up |
+| **[9. Reference](09-reference.md)** | Specs, network, home pose, file locations, tuning |
 
 ---
 

@@ -133,4 +133,6 @@ program. [See §2 Status lights](02-status-lights.md).
 
 ---
 
+---
+
 [← Status lights](02-status-lights.md) · [Contents](README.md) · [Next: Running and stopping the program →](04-running.md)

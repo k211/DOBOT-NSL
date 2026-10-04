@@ -56,7 +56,7 @@ clear the phantom out of the way and keep a hand near the e-stop.
 ## The rumble
 
 The controller vibrates as the arm approaches a **kinematic singularity**.
-Stronger buzz means closer. [See §7 →](07-limits.md)
+Stronger buzz means closer. [See §7 →](07-troubleshooting.md)
 
 > ⚠️ **The rumble is not contact force.** No force sensor is fitted. The vibration
 > describes the arm's *geometry*, not how hard the probe is pressing. You will
@@ -72,6 +72,8 @@ inferred from documentation. If you change controllers, measure again rather
 than assuming: the kernel and the ROS driver disagree about D-pad sign, and an
 earlier version of this project had a trigger mapped so that the arm climbed at
 full speed the instant the deadman was pressed.
+
+---
 
 ---
 

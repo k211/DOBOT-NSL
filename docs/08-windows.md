@@ -1,6 +1,6 @@
-# 9. Running on Windows
+# 8. Running on Windows
 
-[← Troubleshooting](08-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](10-reference.md)
+[← Limits, faults and recovery](07-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](09-reference.md)
 
 A second, ROS-free teleop lives in [`windows/`](../windows/) for machines that
 cannot run the Linux stack.
@@ -98,4 +98,6 @@ for homing, `Ctrl+C` to disable and exit.
 
 ---
 
-[← Troubleshooting](08-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](10-reference.md)
+---
+
+[← Limits, faults and recovery](07-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](09-reference.md)

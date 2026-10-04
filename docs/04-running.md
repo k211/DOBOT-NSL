@@ -94,7 +94,6 @@ shut down.
 ## Homing while the program is running
 
 Use the controller: hold **L1 + L2 + R2** for one second.
-[See §5 →](05-joystick.md#homing)
 
 `go_home.py` only works with the launch stopped, so it is for before you start
 or after an error — not during a demonstration.
@@ -111,6 +110,8 @@ ros2 topic echo /joint_states --once    # do the angles match the real pose?
 ping -c3 192.168.5.1                    # network alive?
 ls /dev/input/js0                       # controller present?
 ```
+
+---
 
 ---
 

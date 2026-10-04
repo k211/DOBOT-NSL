@@ -1,6 +1,6 @@
-# 10. Reference
+# 9. Reference
 
-[← Running on Windows](09-windows.md) · [Contents](README.md)
+[← Running on Windows](08-windows.md) · [Contents](README.md)
 
 ---
 
@@ -93,4 +93,6 @@ Editing Python or YAML needs **no** rebuild — just restart the program.
 
 ---
 
-[← Running on Windows](09-windows.md) · [Contents](README.md)
+---
+
+[← Running on Windows](08-windows.md) · [Contents](README.md)

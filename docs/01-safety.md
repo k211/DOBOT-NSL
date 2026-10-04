@@ -70,7 +70,7 @@ only under direct supervision, and only within limits.
 > visitors — and never for an approach toward the phantom or a person.
 
 If you would rather remove the risk entirely, set `scale_turbo` to `1.0` in
-`joy_params.yaml` and restart. [See §10](10-reference.md#tuning-for-the-stand).
+`joy_params.yaml` and restart. [See §9](09-reference.md#tuning-for-the-stand).
 
 ## Things that are safe, and often mistaken for faults
 
@@ -78,8 +78,10 @@ If you would rather remove the risk entirely, set `scale_turbo` to `1.0` in
 |---|---|
 | A clicking sound when the arm enables | Joint brakes releasing. Normal and unavoidable |
 | A fan running constantly | The control computer lives in the base |
-| The arm stopping dead mid-move | Usually a joint limit or singularity. [See §7](07-limits.md) |
+| The arm stopping dead mid-move | Usually a joint limit or singularity. [See §7](07-troubleshooting.md) |
 | The controller buzzing | Singularity proximity warning, not contact force |
+
+---
 
 ---
 
