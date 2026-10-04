@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 230" role="img" aria-label="Scale of the condition number kappa: about 16 at the home pose is healthy, rumble begins around 25, Servo decelerates at 60, and Servo hard-stops at 100.">
+<style>
+  svg { color: #24343A; }
+  @media (prefers-color-scheme: dark) { svg { color: #D6E2E6; } }
+</style>
+
+        <line x1="70" y1="150" x2="760" y2="150" stroke="currentColor" stroke-width="1.6"/>
+        <rect x="70" y="138" width="140" height="24" fill="#22B467" opacity=".22"/>
+        <rect x="210" y="138" width="230" height="24" fill="#E0B400" opacity=".22"/>
+        <rect x="440" y="138" width="200" height="24" fill="#E0B400" opacity=".4"/>
+        <rect x="640" y="138" width="120" height="24" fill="#D6301F" opacity=".3"/>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor" text-anchor="middle">
+          <line x1="140" y1="132" x2="140" y2="168" stroke="currentColor" stroke-width="1.4"/>
+          <text x="140" y="124">κ 16</text>
+          <text x="140" y="188">home pose</text>
+          <text x="140" y="204" opacity=".7">healthy</text>
+
+          <line x1="210" y1="132" x2="210" y2="168" stroke="currentColor" stroke-width="1.4"/>
+          <text x="210" y="124">κ 25</text>
+          <text x="232" y="188">rumble starts</text>
+          <text x="232" y="204" opacity=".7">you feel it</text>
+
+          <line x1="440" y1="132" x2="440" y2="168" stroke="currentColor" stroke-width="1.4"/>
+          <text x="440" y="124">κ 60</text>
+          <text x="440" y="188">arm slows down</text>
+          <text x="440" y="204" opacity=".7">automatic</text>
+
+          <line x1="640" y1="126" x2="640" y2="174" stroke="#D6301F" stroke-width="2"/>
+          <text x="640" y="118" fill="#D6301F" font-weight="700">κ 100</text>
+          <text x="660" y="188" fill="#D6301F">arm stops</text>
+          <text x="660" y="204" opacity=".75">holds position</text>
+        </g>
+        <text x="70" y="58" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="currentColor" font-weight="700">CONDITION NUMBER κ — how close to a singularity</text>
+        <text x="70" y="78" font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor" opacity=".7">low = arm can move freely in every direction   ·   high = losing a direction</text>
+      </svg>

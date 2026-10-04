@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" role="img" aria-label="Top-down view showing the operator standing in front of the robot. D-pad up moves the probe away from the operator, D-pad down brings it toward them, D-pad left moves it to the operator's left, D-pad right to their right.">
+<style>
+  svg { color: #24343A; }
+  @media (prefers-color-scheme: dark) { svg { color: #D6E2E6; } }
+</style>
+
+        <!-- bench -->
+        <rect x="150" y="48" width="460" height="196" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 5" opacity=".5"/>
+        <text x="162" y="68" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="currentColor" opacity=".6">bench (top view)</text>
+        <!-- robot base -->
+        <circle cx="380" cy="186" r="30" fill="none" stroke="currentColor" stroke-width="2.2"/>
+        <text x="380" y="190" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="currentColor">BASE</text>
+        <!-- probe -->
+        <circle cx="380" cy="116" r="11" fill="#0C6B74"/>
+        <text x="398" y="113" font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor">probe</text>
+        <!-- operator -->
+        <circle cx="380" cy="286" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="380" y="291" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="currentColor">YOU</text>
+        <!-- arrows -->
+        <g stroke="#0C6B74" stroke-width="2.2" fill="none" marker-end="url(#ar2)">
+          <line x1="380" y1="104" x2="380" y2="62"/>
+          <line x1="380" y1="128" x2="380" y2="166"/>
+          <line x1="366" y1="116" x2="282" y2="116"/>
+          <line x1="394" y1="116" x2="478" y2="116"/>
+        </g>
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#0C6B74"/>
+          </marker>
+        </defs>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor">
+          <text x="392" y="60">D-pad ▴  away from you</text>
+          <text x="392" y="166">D-pad ▾  toward you</text>
+          <text x="276" y="104" text-anchor="end">D-pad ◂</text>
+          <text x="276" y="120" text-anchor="end" opacity=".7">your left</text>
+          <text x="484" y="104">D-pad ▸</text>
+          <text x="484" y="120" opacity=".7">your right</text>
+        </g>
+      </svg>

@@ -9,6 +9,17 @@ contact force. Ported from an earlier Kinova Gen3 implementation.
 Runs identically against **Gazebo simulation** and the **real arm** — the same
 MoveIt Servo + haptics stack sits on top of either backend.
 
+## Documentation
+
+- **[Operating manual](docs/)** — connecting, running, driving, scanning,
+  troubleshooting and packing down, written for people new to robot arms.
+  Browse by topic, or take the
+  **[single-file PDF](docs/E6-Exhibition-Manual.pdf)** to share.
+- **[Running on Windows](windows/)** — a ROS-free teleop that uses the robot's
+  own Cartesian servo command, for machines that cannot run this stack. Start
+  there rather than following the ROS instructions below: MoveIt has no
+  supported Windows build.
+
 ## System requirements
 
 - Ubuntu 24.04, **ROS 2 Jazzy**, Gazebo Harmonic (sim only), MoveIt 2 + MoveIt Servo

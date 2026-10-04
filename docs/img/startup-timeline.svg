@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 182" role="img" aria-label="Startup timeline: network up at zero seconds, launch command, TCP connect and robot enable at about four seconds, Servo started at about fifteen seconds, haptic calibration complete at about forty seconds, then ready to drive.">
+<style>
+  svg { color: #24343A; }
+  @media (prefers-color-scheme: dark) { svg { color: #D6E2E6; } }
+</style>
+
+        <line x1="60" y1="96" x2="800" y2="96" stroke="currentColor" stroke-width="1.5"/>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor">
+          <circle cx="90" cy="96" r="6" fill="currentColor"/>
+          <text x="90" y="74" text-anchor="middle">0 s</text>
+          <text x="90" y="124" text-anchor="middle">launch</text>
+          <text x="90" y="140" text-anchor="middle">typed</text>
+
+          <circle cx="258" cy="96" r="6" fill="currentColor"/>
+          <text x="258" y="74" text-anchor="middle">~4 s</text>
+          <text x="258" y="124" text-anchor="middle">TCP connect</text>
+          <text x="258" y="140" text-anchor="middle">robot enabled</text>
+
+          <circle cx="430" cy="96" r="6" fill="currentColor"/>
+          <text x="430" y="74" text-anchor="middle">~15 s</text>
+          <text x="430" y="124" text-anchor="middle">Servo started</text>
+          <text x="430" y="140" text-anchor="middle">LED goes green</text>
+
+          <circle cx="602" cy="96" r="6" fill="#E0B400"/>
+          <text x="602" y="74" text-anchor="middle">15–40 s</text>
+          <text x="602" y="124" text-anchor="middle">calibrating</text>
+          <text x="602" y="140" text-anchor="middle">keep arm still</text>
+
+          <circle cx="774" cy="96" r="7" fill="#22B467"/>
+          <text x="774" y="74" text-anchor="middle">~40 s</text>
+          <text x="774" y="124" text-anchor="middle">ready</text>
+          <text x="774" y="140" text-anchor="middle">drive it</text>
+        </g>
+        <rect x="430" y="88" width="344" height="16" fill="#E0B400" opacity="0.16"/>
+      </svg>

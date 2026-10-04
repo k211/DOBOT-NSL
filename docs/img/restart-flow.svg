@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 150" role="img" aria-label="Restart sequence: press Control-C, release the emergency stop if it is latched, bring the network up, relaunch, then wait forty seconds without touching the controller.">
+<style>
+  svg { color: #24343A; }
+  @media (prefers-color-scheme: dark) { svg { color: #D6E2E6; } }
+</style>
+
+        <defs>
+          <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="11.5" fill="currentColor">
+          <rect x="16" y="46" width="132" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="82" y="72" text-anchor="middle" font-weight="700">1  Ctrl+C</text>
+          <text x="82" y="90" text-anchor="middle" opacity=".75">stop program</text>
+
+          <rect x="184" y="46" width="132" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="250" y="72" text-anchor="middle" font-weight="700">2  e-stop</text>
+          <text x="250" y="90" text-anchor="middle" opacity=".75">rotate to release</text>
+
+          <rect x="352" y="46" width="132" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="418" y="72" text-anchor="middle" font-weight="700">3  network</text>
+          <text x="418" y="90" text-anchor="middle" opacity=".75">nmcli + ping</text>
+
+          <rect x="520" y="46" width="132" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="586" y="72" text-anchor="middle" font-weight="700">4  relaunch</text>
+          <text x="586" y="90" text-anchor="middle" opacity=".75">ros2 launch</text>
+
+          <rect x="688" y="46" width="136" height="58" rx="6" fill="none" stroke="#22B467" stroke-width="2"/>
+          <text x="756" y="72" text-anchor="middle" font-weight="700">5  wait 40 s</text>
+          <text x="756" y="90" text-anchor="middle" opacity=".75">hands off</text>
+        </g>
+        <g stroke="currentColor" stroke-width="1.4" marker-end="url(#ar3)">
+          <line x1="150" y1="75" x2="180" y2="75"/>
+          <line x1="318" y1="75" x2="348" y2="75"/>
+          <line x1="486" y1="75" x2="516" y2="75"/>
+          <line x1="654" y1="75" x2="684" y2="75"/>
+        </g>
+      </svg>
