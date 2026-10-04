@@ -1,6 +1,6 @@
 # 1. Safety and the emergency stop
 
-[← Contents](README.md) · [Next: Unpacking and connecting →](02-setup.md)
+[Contents](README.md) · [Next: Status lights →](02-status-lights.md)
 
 Read this before touching anything. The rest of the manual assumes you know
 where the stop button is.
@@ -70,7 +70,7 @@ only under direct supervision, and only within limits.
 > visitors — and never for an approach toward the phantom or a person.
 
 If you would rather remove the risk entirely, set `scale_turbo` to `1.0` in
-`joy_params.yaml` and restart. [See §11](11-reference.md#tuning-for-the-stand).
+`joy_params.yaml` and restart. [See §10](10-reference.md#tuning-for-the-stand).
 
 ## Things that are safe, and often mistaken for faults
 
@@ -83,4 +83,6 @@ If you would rather remove the risk entirely, set `scale_turbo` to `1.0` in
 
 ---
 
-[← Contents](README.md) · [Next: Unpacking and connecting →](02-setup.md)
+---
+
+[Contents](README.md) · [Next: Status lights →](02-status-lights.md)

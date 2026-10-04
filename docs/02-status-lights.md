@@ -1,6 +1,6 @@
-# 5. Status lights
+# 2. Status lights
 
-[← Joystick](04-joystick.md) · [Contents](README.md) · [Next: The probe →](06-scanning.md)
+[← Safety and the emergency stop](01-safety.md) · [Contents](README.md) · [Next: Unpacking, packing and connecting →](03-setup.md)
 
 A ring of LEDs sits near the base joint and near the wrist. It is the fastest way
 to know what the arm is doing.
@@ -36,4 +36,6 @@ Anything **red** means an alarm — stop and read
 
 ---
 
-[← Joystick](04-joystick.md) · [Contents](README.md) · [Next: The probe →](06-scanning.md)
+---
+
+[← Safety and the emergency stop](01-safety.md) · [Contents](README.md) · [Next: Unpacking, packing and connecting →](03-setup.md)

@@ -1,6 +1,6 @@
 # 8. Troubleshooting
 
-[← Limits](07-limits.md) · [Contents](README.md) · [Next: Packing down →](09-packing.md)
+[← Joint limits and singularities](07-limits.md) · [Contents](README.md) · [Next: Running on Windows →](09-windows.md)
 
 Work down the table. If nothing matches, do the full restart — it fixes almost
 everything.
@@ -68,4 +68,6 @@ ls /dev/input/js0                       # controller present?
 
 ---
 
-[← Limits](07-limits.md) · [Contents](README.md) · [Next: Packing down →](09-packing.md)
+---
+
+[← Joint limits and singularities](07-limits.md) · [Contents](README.md) · [Next: Running on Windows →](09-windows.md)

@@ -1,6 +1,6 @@
 # 7. Joint limits and singularities
 
-[← The probe](06-scanning.md) · [Contents](README.md) · [Next: Troubleshooting →](08-troubleshooting.md)
+[← The probe: payload and contact force](06-scanning.md) · [Contents](README.md) · [Next: Troubleshooting →](08-troubleshooting.md)
 
 What the arm does at its limits, and when a restart is actually needed.
 
@@ -72,4 +72,6 @@ feel rumble as a joint nears its limit.
 
 ---
 
-[← The probe](06-scanning.md) · [Contents](README.md) · [Next: Troubleshooting →](08-troubleshooting.md)
+---
+
+[← The probe: payload and contact force](06-scanning.md) · [Contents](README.md) · [Next: Troubleshooting →](08-troubleshooting.md)

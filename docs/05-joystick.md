@@ -1,6 +1,6 @@
-# 4. Joystick controls
+# 5. Joystick controls
 
-[← Running](03-running.md) · [Contents](README.md) · [Next: Status lights →](05-status-lights.md)
+[← Running and stopping the program](04-running.md) · [Contents](README.md) · [Next: The probe: payload and contact force →](06-scanning.md)
 
 **Hold L1 or nothing happens.** Every direction is described from the operator's
 point of view, standing in front of the arm and facing it.
@@ -75,4 +75,6 @@ full speed the instant the deadman was pressed.
 
 ---
 
-[← Running](03-running.md) · [Contents](README.md) · [Next: Status lights →](05-status-lights.md)
+---
+
+[← Running and stopping the program](04-running.md) · [Contents](README.md) · [Next: The probe: payload and contact force →](06-scanning.md)

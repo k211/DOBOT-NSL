@@ -25,16 +25,15 @@ OUT = os.path.join(HERE, 'E6-Exhibition-Manual.pdf')
 
 TOPICS = [
     ('01-safety', 'Safety and the emergency stop'),
-    ('02-setup', 'Unpacking and connecting'),
-    ('03-running', 'Running and stopping the program'),
-    ('04-joystick', 'Joystick controls'),
-    ('05-status-lights', 'Status lights'),
+    ('02-status-lights', 'Status lights'),
+    ('03-setup', 'Unpacking, packing and connecting'),
+    ('04-running', 'Running and stopping the program'),
+    ('05-joystick', 'Joystick controls'),
     ('06-scanning', 'The probe: payload and contact force'),
     ('07-limits', 'Joint limits and singularities'),
     ('08-troubleshooting', 'Troubleshooting'),
-    ('09-packing', 'Packing down'),
-    ('10-windows', 'Running on Windows'),
-    ('11-reference', 'Reference'),
+    ('09-windows', 'Running on Windows'),
+    ('10-reference', 'Reference'),
 ]
 
 # Colour emoji need a colour-emoji font that print backends rarely have, and a

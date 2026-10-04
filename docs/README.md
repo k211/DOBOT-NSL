@@ -4,7 +4,7 @@ How to connect, run, drive and pack down the arm for live probe-on-phantom
 demonstrations. Written for engineers who have not worked with a robot arm
 before.
 
-**[📄 Download the whole manual as a PDF](E6-Exhibition-Manual.pdf)** — one file,
+**[Download the whole manual as a PDF](E6-Exhibition-Manual.pdf)** — one file,
 all sections, for sharing with colleagues.
 
 ---
@@ -17,24 +17,31 @@ all sections, for sharing with colleagues.
 
 | Emergency | Start | Stop |
 |---|---|---|
-| Hit the **red mushroom button** on the base | `nmcli con up dobot-e6` then `ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1` | `Ctrl+C` in that terminal |
+| Hit the **red mushroom button** on the base | `nmcli con up dobot-e6`, home the arm, then `ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1` | `Ctrl+C` in that terminal |
+
+**Do not touch the controller until the LED is flashing green slowly**, then wait
+a further 25 seconds for calibration. [§4](04-running.md)
 
 ---
 
 ## Contents
 
-### Getting going
+### Before you touch it
 | | |
 |---|---|
-| **[1. Safety and the emergency stop](01-safety.md)** | Read first. The deadman principle, rules for the stand |
-| **[2. Unpacking and connecting](02-setup.md)** | Four cables, and powering on without switching it off by mistake |
-| **[3. Running and stopping](03-running.md)** | The commands, what a good startup looks like, homing from the keyboard |
+| **[1. Safety and the emergency stop](01-safety.md)** | Read first. The deadman principle, supervising visitors |
+| **[2. Status lights](02-status-lights.md)** | What each colour and flash rate means |
+
+### Setting up
+| | |
+|---|---|
+| **[3. Unpacking, packing and connecting](03-setup.md)** | The DobotStudio Pro posture procedure, the four cables, powering on |
+| **[4. Running and stopping](04-running.md)** | Network, homing, launch, and when it is safe to drive |
 
 ### Driving
 | | |
 |---|---|
-| **[4. Joystick controls](04-joystick.md)** | Full control map, operator-relative directions, the homing key |
-| **[5. Status lights](05-status-lights.md)** | What each colour and flash rate means |
+| **[5. Joystick controls](05-joystick.md)** | Full control map, operator-relative directions, the homing key |
 
 ### Scanning
 | | |
@@ -47,12 +54,11 @@ all sections, for sharing with colleagues.
 |---|---|
 | **[8. Troubleshooting](08-troubleshooting.md)** | Symptom table, the full restart, health checks |
 
-### Packing and other machines
+### Other machines
 | | |
 |---|---|
-| **[9. Packing down](09-packing.md)** | The packing posture, and why it needs DobotStudio Pro |
-| **[10. Running on Windows](10-windows.md)** | The ROS-free teleop, and what it gives up |
-| **[11. Reference](11-reference.md)** | Specs, network, home pose, file locations, tuning |
+| **[9. Running on Windows](09-windows.md)** | The ROS-free teleop, and what it gives up |
+| **[10. Reference](10-reference.md)** | Specs, network, home pose, file locations, tuning |
 
 ---
 
@@ -60,15 +66,18 @@ all sections, for sharing with colleagues.
 
 Work through this the day before, not on the morning.
 
+- [ ] Arm unfolded from the packing posture with DobotStudio Pro — [§3](03-setup.md)
 - [ ] Arm bolted to the bench, emergency stop within the operator's reach
 - [ ] `ping 192.168.5.1` replies
-- [ ] Program starts, reaches `Servo started`, then `Calibration complete`
-- [ ] Controller drives all six directions — see [§4](04-joystick.md)
+- [ ] `go_home.py --speed 5` completes
+- [ ] Program starts, LED flashes green slowly, then `Calibration complete`
+- [ ] Controller drives all six directions — [§5](05-joystick.md)
 - [ ] Homing key works: **L1 + L2 + R2** held one second
 - [ ] Probe fitted, assembly weighed, **under 750 g**
-- [ ] ⚠️ **Payload declared in software** — [see §6](06-scanning.md#software--tell-the-controller-about-the-load). **Not yet implemented**
+- [ ] ⚠️ **Payload declared in software** — [§6](06-scanning.md). **Not yet implemented**
 - [ ] Phantom positioned so the arm can reach it without stretching to full extent
 - [ ] Spare USB-C cable for the controller
+- [ ] Windows laptop available for pack-down — [§3](03-setup.md)
 - [ ] This manual printed or on a phone
 
 ## Known gaps

@@ -1,6 +1,6 @@
 # 6. The probe: payload and contact force
 
-[← Status lights](05-status-lights.md) · [Contents](README.md) · [Next: Limits and singularities →](07-limits.md)
+[← Joystick controls](05-joystick.md) · [Contents](README.md) · [Next: Joint limits and singularities →](07-limits.md)
 
 The two questions that matter most for scanning: what changes when you fit the
 probe, and what happens when it presses on the phantom.
@@ -104,4 +104,6 @@ addition, not a software setting.
 
 ---
 
-[← Status lights](05-status-lights.md) · [Contents](README.md) · [Next: Limits and singularities →](07-limits.md)
+---
+
+[← Joystick controls](05-joystick.md) · [Contents](README.md) · [Next: Joint limits and singularities →](07-limits.md)

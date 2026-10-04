@@ -1,6 +1,6 @@
-# 10. Running on Windows
+# 9. Running on Windows
 
-[← Packing down](09-packing.md) · [Contents](README.md) · [Next: Reference →](11-reference.md)
+[← Troubleshooting](08-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](10-reference.md)
 
 A second, ROS-free teleop lives in [`windows/`](../windows/) for machines that
 cannot run the Linux stack.
@@ -87,7 +87,7 @@ worked out for the Linux stack do not carry over.
 python windows_teleop.py
 ```
 
-Same layout as [§4](04-joystick.md): deadman held throughout, three-button combo
+Same layout as [§5](05-joystick.md): deadman held throughout, three-button combo
 for homing, `Ctrl+C` to disable and exit.
 
 > ⚠️ Everything in [§1 Safety](01-safety.md) and
@@ -96,4 +96,6 @@ for homing, `Ctrl+C` to disable and exit.
 
 ---
 
-[← Packing down](09-packing.md) · [Contents](README.md) · [Next: Reference →](11-reference.md)
+---
+
+[← Troubleshooting](08-troubleshooting.md) · [Contents](README.md) · [Next: Reference →](10-reference.md)
