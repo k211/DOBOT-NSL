@@ -75,7 +75,8 @@ feel rumble as a joint nears its limit.
 | Launch hangs with no output | Wrong IP, robot off, or no network | `ping -c3 192.168.5.1`. If it fails, `nmcli con up dobot-e6` |
 | Constant rumble, arm clearly fine and not moving | The arm is silently refusing commands, so the software's idea of its pose drifts | Look for `ServoJ rejected` in the terminal. Full restart |
 | Rumbles at rest right after startup | The arm was moved during the 25 s calibration window | Restart and keep hands off for the first 40 s |
-| Red light | Alarm or collision detected | Full restart. If it returns immediately, power-cycle the arm |
+| Yellow light while moving, stays yellow after `Ctrl+C` | Collision detection tripped: the arm is paused. `Ctrl+C` does not clear it | Check nothing is touching the arm, then repeat start-up steps 4–5. `go_home.py` clears the alarm and flushes the paused motion itself |
+| Red light | Alarm | Full restart. If it returns immediately, power-cycle the arm |
 | Wrist or probe drops slightly when the program stops or the robot is turned off | Normal: the motors let go a fraction of a second before the joint brakes grip, and the probe's weight pulls the wrist down in that gap. The payload setting cannot prevent it — it only applies while the arm is enabled | Support the probe by hand when stopping or turning off. If it drops more than a few millimetres, or keeps sinking, stop using the arm and have the brakes checked |
 | Controller does nothing at all | USB not detected | Unplug and replug. Check `ls /dev/input/js0`. Restart the program |
 | Arm drifts with nobody touching anything | Stick drift on a worn controller | Release L1. Restart; if it persists the controller needs replacing |
