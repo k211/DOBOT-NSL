@@ -6,7 +6,7 @@ before.
 
 | Download | Covers | Pages |
 |---|---|---|
-| **[⬇ Quick guide](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Quick-Guide.pdf)** | Power on, run, drive. For the operator on the day | 7 |
+| **[⬇ Quick guide](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Quick-Guide.pdf)** | Start-up steps and the joystick. For the operator on the day | 2 |
 | **[⬇ Full manual](https://github.com/k211/DOBOT-NSL/raw/main/docs/E6-Exhibition-Manual.pdf)** | Sections 1–7: safety, lights, setup, running, joystick, the probe, faults | 19 |
 
 **[⬇ Hardware checklist](https://github.com/k211/DOBOT-NSL/raw/main/docs/NSL-Hardware-Checklist.pdf)** — what to pack, out and back. [Markdown version](hardware-checklist.md)

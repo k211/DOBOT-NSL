@@ -48,18 +48,6 @@ ALL_TOPICS = [
 # The full manual: the seven operating sections, whole.
 FULL = [(name, title, {}) for name, title in ALL_TOPICS[:7]]
 
-# The quick guide: just enough to switch the arm on, start it and drive it.
-# `only` keeps named H2 blocks, `drop` removes them -- so the quick guide reuses
-# the same source text instead of duplicating it and drifting out of step.
-QUICK = [
-    ('03-setup', 'Powering the arm on', {'only': ['Powering the arm on']}),
-    ('04-running', 'Running and stopping', {}),
-    # The operator-frame diagram is cut: the control table already says "your
-    # left" and "away from you", so on a short handout the picture restates it
-    # rather than adding anything. Re-mapping is a developer concern.
-    ('05-joystick', 'Joystick controls',
-     {'drop': ['Directions are from where you stand', 'Re-mapping']}),
-]
 
 # Colour emoji need a colour-emoji font that print backends rarely have, and a
 # missing glyph in the status-light table would destroy the one thing that table
@@ -114,7 +102,7 @@ def prepare(name, included, only=None, drop=None):
     for emoji, repl in GLYPH.items():
         text = text.replace(emoji, repl)
 
-    html = markdown.markdown(text, extensions=['tables', 'attr_list', 'sane_lists'])
+    html = markdown.markdown(text, extensions=['tables', 'attr_list', 'sane_lists', 'fenced_code'])
     html = re.sub(r'^<h1>.*?</h1>', '', html, count=1, flags=re.S)
     return html
 
@@ -258,15 +246,44 @@ def main():
           'material and are kept in the repository rather than here: '
           'github.com/k211/DOBOT-NSL')
 
-    build(QUICK, 'E6-Quick-Guide.pdf',
-          'Quick guide &nbsp;&middot;&nbsp; power on, run, drive',
-          'Dobot Magician E6<br>quick guide',
-          'The short version: switch the arm on, start the program, and drive it. '
-          'For the operator on the day.',
-          'Unpacking and packing, the status lights, scanning with the probe and '
-          'troubleshooting are in the full manual: github.com/k211/DOBOT-NSL')
-
+    build_quick()
     build_checklist()
+
+
+def build_quick():
+    """Two pages for the operator on the day: start-up steps, then the joystick.
+
+    Written as its own source (quick-guide.md) rather than filtered from the
+    manual: it is deliberately just numbered steps and waiting times, with the
+    explanations left to the full manual.
+    """
+    body = prepare('quick-guide', set())
+    body = body.replace('<h2>Joystick</h2>', '<h2 class="pb">Joystick</h2>')
+    css = CSS + """
+      @page { size: A4; margin: 14mm 16mm 12mm 16mm;
+              @bottom-center { content: ""; } }
+      h1 { font-size: 20pt; margin: 0 0 3mm; }
+      h2 { font-size: 13pt; margin: 4mm 0 2mm; border-bottom: 0.4mm solid #16242A;
+           padding-bottom: 1mm; }
+      h2.pb { page-break-before: always; margin-top: 0; }
+      p { margin: 2.5mm 0 1mm; font-size: 10pt; }
+      pre { margin: 1mm 0 2mm; font-size: 9pt; }
+      table { font-size: 9.5pt; }
+      td { padding: 1.4mm 2mm; }
+      img { max-height: 105mm; }
+      .warn { margin: 0 0 3mm; padding: 2.5mm 3.5mm; background: #FBE7E4;
+              border-left: 1mm solid #A81F14; font-size: 8.8pt; }
+      .warn ul { margin: 1mm 0 0; padding-left: 4.5mm; }
+    """
+    html = (f'<style>{css}</style><h1>Dobot Magician E6 \u2014 quick guide</h1>'
+            f'{SAFETY_BOX}{body}')
+    out = os.path.join(HERE, 'E6-Quick-Guide.pdf')
+    doc = HTML(string=html, base_url=HERE).render()
+    doc.write_pdf(out)
+    n = len(doc.pages)
+    print(f'wrote E6-Quick-Guide.pdf  ({os.path.getsize(out)/1024:.0f} kB, {n} pages)')
+    if n != 2:
+        print('  WARNING: quick guide should be exactly 2 pages')
 
 
 def build_checklist():
