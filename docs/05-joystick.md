@@ -7,7 +7,7 @@ point of view, standing in front of the arm and facing it.
 
 ---
 
-![Controller map](img/controller.svg)
+![Controller map](img/controller-photo.svg)
 
 ## What each control does
 

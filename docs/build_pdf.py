@@ -258,14 +258,21 @@ def build_quick():
     explanations left to the full manual.
     """
     body = prepare('quick-guide', set())
-    body = body.replace('<h2>Joystick</h2>', '<h2 class="pb">Joystick</h2>')
+    # The joystick page is landscape: the photo is wide and the functions are
+    # written beside each control, so it needs the width more than the height.
+    head, _, joy = body.partition('<h2>Joystick</h2>')
+    body = head + f'<div class="land"><h2>Joystick</h2>{joy}</div>'
     css = CSS + """
       @page { size: A4; margin: 14mm 16mm 12mm 16mm;
               @bottom-center { content: ""; } }
       h1 { font-size: 20pt; margin: 0 0 3mm; }
       h2 { font-size: 13pt; margin: 4mm 0 2mm; border-bottom: 0.4mm solid #16242A;
            padding-bottom: 1mm; }
-      h2.pb { page-break-before: always; margin-top: 0; }
+      @page land { size: A4 landscape; margin: 10mm 10mm 8mm 10mm;
+                   @bottom-right { content: ""; } }
+      .land { page: land; }
+      .land h2 { margin-top: 0; }
+      .land img { max-height: 170mm; width: 100%; margin: 22mm auto 0; }
       p { margin: 2.5mm 0 1mm; font-size: 10pt; }
       pre { margin: 1mm 0 2mm; font-size: 9pt; }
       table { font-size: 9.5pt; }

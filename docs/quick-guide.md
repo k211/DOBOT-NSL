@@ -44,16 +44,4 @@ controller. About **40 s** in total.
 
 ## Joystick
 
-![Controller map](img/controller.svg)
-
-| Control | Motion |
-|---|---|
-| **L1** | **Hold to move.** Release and the arm stops |
-| **D-pad ◄ ►** | Move to your left / right |
-| **D-pad ▲ ▼** | Move away from / toward you |
-| **Left stick ▲▼** | Move up / down |
-| **Right stick ▲▼** | Yaw — twist |
-| **□ / ○** | Pitch — tilt |
-| **△ / ✕** | Roll — rotate |
-| **L1 + L2 + R2**, hold 1 s | **Home** — then release L1 and press it again to drive |
-| **R1** | Turbo ×1.8 — operator only |
+![Controller map](img/controller-photo.svg)
