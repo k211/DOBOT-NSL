@@ -270,18 +270,45 @@ def main():
 
 
 def build_checklist():
-    """Single-page-ish checklist: no cover, no contents, just the tables."""
+    """One A4 page: compact type, no cover, no footer, tables only.
+
+    It is a sheet to tick on a clipboard, so it must not spill onto a second
+    page -- a missed page is a missed e-stop.
+    """
     body = prepare('hardware-checklist', set())
+    body = body.replace('<hr />', '')
     css = CSS + """
-      td:first-child, td:nth-child(2), th:first-child, th:nth-child(2)
-        { width: 9mm; text-align: center; font-size: 12pt; }
-      h1 { font-size: 18pt; margin: 0 0 3mm; }
-      table { margin: 2mm 0 4mm; }
+      @page { size: A4; margin: 8mm 10mm 7mm 10mm;
+              @bottom-center { content: ""; } @bottom-right { content: ""; } }
+      body { font-size: 7.3pt; line-height: 1.2; }
+      h1 { font-size: 14pt; margin: 0 0 1.5mm; }
+      h2 { font-size: 9.5pt; margin: 1.8mm 0 0.5mm; }
+      p { margin: 0 0 1.2mm; }
+      table { margin: 0; font-size: 7.2pt; page-break-inside: auto; }
+      th { padding: 0.6mm 1.4mm; font-size: 6.4pt; }
+      td { padding: 0.35mm 1.4mm; }
+      /* tick columns: the first cell always, the second only in Out/Back
+         tables -- in the two-column check tables it holds the text */
+      td:first-child, th:first-child,
+      td:nth-child(2):not(:last-child), th:nth-child(2):not(:last-child)
+        { width: 8mm; text-align: center; font-size: 8.5pt; padding: 0 1mm; }
+      td:last-child, th:last-child { text-align: left; }
+      /* fixed columns so every Out/Back table lines up down the page */
+      table { table-layout: fixed; width: 100%; }
+      td:nth-child(3):not(:last-child), th:nth-child(3):not(:last-child) { width: 36%; }
+      td:nth-child(4):not(:last-child), th:nth-child(4):not(:last-child)
+        { width: 9%; text-align: center; }
+      code { font-size: 6.8pt; padding: 0 0.6mm; }
     """
     html = f'<style>{css}</style><h1>NSL Dobot \u2014 hardware checklist</h1>{body}'
     out = os.path.join(HERE, 'NSL-Hardware-Checklist.pdf')
-    HTML(string=html, base_url=HERE).write_pdf(out)
-    print(f'wrote NSL-Hardware-Checklist.pdf  ({os.path.getsize(out)/1024:.0f} kB)')
+    doc = HTML(string=html, base_url=HERE).render()
+    pages = len(doc.pages)
+    doc.write_pdf(out)
+    print(f'wrote NSL-Hardware-Checklist.pdf  ({os.path.getsize(out)/1024:.0f} kB, '
+          f'{pages} page{"s" if pages != 1 else ""})')
+    if pages != 1:
+        print('  WARNING: checklist no longer fits on one page')
 
 
 if __name__ == '__main__':
