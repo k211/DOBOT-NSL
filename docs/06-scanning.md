@@ -30,7 +30,7 @@ The probe payload is declared to the controller every time the arm is enabled:
 | | |
 |---|---|
 | Mass | **355 g** (probe + holder) |
-| Centre of mass | X **0 mm**, Y **65 mm**, Z **50 mm**, in the flange (tool) frame |
+| Centre of mass | X **0 mm**, Y **65 mm**, Z **0 mm**, in the flange (tool) frame |
 | Probe face (teleop pivot) | X 0 mm, Y 65 mm, Z 98 mm — a different point, see [§5](05-joystick.md) |
 
 These live in `src/dobot_e6_hw/scripts/home_pose.py` (`PROBE_PAYLOAD_KG`,
@@ -53,7 +53,7 @@ probe. In practice:
 
 - **The arm still moves correctly.** It is position controlled, so it still goes
   where the joystick sends it. The error in its internal force model is about
-  **3.5 N** (355 g × gravity) at roughly 80 mm from the flange — small next to
+  **3.5 N** (355 g × gravity) at about 65 mm from the flange — small next to
   what the arm can carry.
 - **Collision detection may trip when nothing has hit anything.** The controller
   expects to work harder than it does, and reads the difference as an outside
