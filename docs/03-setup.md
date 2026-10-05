@@ -65,7 +65,8 @@ differs. It runs on the **Windows laptop**, not the Linux one.
 5. Connect the cables (below) and power on.
 6. Run the **DobotStudio Pro procedure** above, choosing **Home pose**.
 
-> ⚠️ The arm reaches 450 mm and can move its tool at 0.5 m/s. A 7.2 kg arm doing
+> ⚠️ The arm reaches 450 mm in every direction from its base — front, back and
+> sides — and can move its tool at 0.5 m/s. A 7.2 kg arm doing
 > that on an unsecured base will walk off the bench. **Mount it before powering on.**
 
 ---

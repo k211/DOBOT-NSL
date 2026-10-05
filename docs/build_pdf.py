@@ -204,8 +204,9 @@ SAFETY_BOX = (
     'that is your first reflex, not the emergency stop.</li>'
     '<li>Keep the <b>red emergency stop</b> on the base within reach. Press to '
     'stop, rotate to release.</li>'
-    '<li>Nobody puts a hand inside the arm&rsquo;s 450&nbsp;mm reach while it is '
-    'running.</li>'
+    '<li>The <b>robot base is the centre</b> of the workspace: the arm reaches '
+    '450&nbsp;mm in every direction, <b>front and back</b>. Nobody puts a hand '
+    'inside it while it is running.</li>'
     '</ul></div>')
 
 

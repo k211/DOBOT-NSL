@@ -35,6 +35,23 @@ controller, letting go in a panic, or walking away all stop the arm.
 mushroom button. Save the emergency stop for when the arm is doing something you
 did not command.
 
+## The workspace
+
+**The robot base is the centre.** The arm can reach **450 mm in every
+direction** from it — in front, **behind**, to both sides, and upward. It is a
+full circle around the base, not a zone in front of it.
+
+![Workspace, top view](img/workspace.svg)
+
+- **Behind the robot is not safe.** The base can rotate a full ±360°, so the
+  arm can swing round to the back as easily as the front. People standing
+  behind the table are inside the workspace.
+- **Mark the full circle** on the table and floor with tape, front and back.
+- The **operator stands in front**, outside the circle. Visitors stay outside
+  it on every side.
+- Nothing that should not be hit — laptops, the iPad, cups, bags — goes inside
+  the circle. The phantom does, because it has to.
+
 ## Rules for the stand
 
 Visitors **may** drive the arm — that is the point of the demonstration — but
@@ -53,8 +70,8 @@ only under direct supervision, and only within limits.
 - **Visitors drive in free space only.** *You* make any approach to the phantom —
   the arm cannot feel contact and will keep pressing. See
   [§6 Contact force](06-scanning.md#contact-force-on-the-phantom).
-- Nobody puts a hand inside the arm's reach while the program is running. It
-  sweeps a **450 mm radius** sphere around its base.
+- Nobody puts a hand inside the workspace while the program is running —
+  450 mm from the base, **front and back**. [See above](#the-workspace).
 - Keep the phantom, gel and probe cable clear of the arm's path.
 - If anyone is unsure what the arm is about to do, **release L1**. That is always
   safe and always stops it.

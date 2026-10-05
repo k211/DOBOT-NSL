@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-label="Top view of the workspace: the robot base is the centre of a 450 mm radius circle that extends equally in front of, behind and to both sides of the robot. The operator stands outside the circle at the front.">
+<style>
+  svg { color: #24343A; }
+  @media (prefers-color-scheme: dark) { svg { color: #D6E2E6; } }
+</style>
+<defs>
+  <marker id="wa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+  </marker>
+</defs>
+<circle cx="320" cy="215" r="170" fill="#D6301F" fill-opacity="0.10" stroke="#D6301F" stroke-width="2" stroke-dasharray="8 5"/>
+<line x1="150" y1="215" x2="490" y2="215" stroke="currentColor" stroke-width="1" opacity=".35"/>
+<line x1="320" y1="45" x2="320" y2="385" stroke="currentColor" stroke-width="1" opacity=".35"/>
+<circle cx="320" cy="215" r="26" fill="none" stroke="currentColor" stroke-width="2.4"/>
+<text x="320" y="219" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="currentColor">BASE</text>
+<line x1="346" y1="215" x2="486" y2="215" stroke="currentColor" stroke-width="1.6" marker-end="url(#wa)"/>
+<text x="416" y="207" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="12" font-weight="700" fill="currentColor">450 mm</text>
+<g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="currentColor" text-anchor="middle">
+  <text x="320" y="30" font-weight="700">BEHIND THE ROBOT</text>
+  <text x="320" y="72" fill="#D6301F">also in reach</text>
+  <text x="320" y="360" fill="#D6301F">in reach</text>
+  <text x="320" y="405" font-weight="700">IN FRONT OF THE ROBOT</text>
+  <text x="96" y="211">SIDE</text>
+  <text x="96" y="227" fill="#D6301F" font-size="11">in reach</text>
+  <text x="544" y="211">SIDE</text>
+  <text x="544" y="227" fill="#D6301F" font-size="11">in reach</text>
+</g>
+<circle cx="320" cy="440" r="16" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="320" y="444" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="currentColor">YOU</text>
+<text x="350" y="444" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="currentColor">operator stands outside the circle</text>
+</svg>

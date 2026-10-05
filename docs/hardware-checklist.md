@@ -18,8 +18,10 @@ left blank in the Back column is still at the venue.
 | ☐ | ☐ | Ethernet cable, robot LAN1 → laptop | 1 | |
 | ☐ | ☐ | Spare Ethernet cable | 1 | |
 | ☐ | ☐ | USB-C/USB-A → Ethernet adapter | 1 | Only if a laptop has no Ethernet port |
-| ☐ | ☐ | Screws for bolting the base down | set | M6. Count them out and back |
-| ☐ | ☐ | Screwdrivers / Allen keys | set | To match the base and flange screws |
+| ☐ | ☐ | Wooden mounting plate (robot base board) | 1 | The board the robot is bolted to |
+| ☐ | ☐ | Robot's original mounting screws | 4 | Base to plate. Count them out and back |
+| ☐ | ☐ | M2.5, M3, M4 screws | set | Probe holder and fixtures. Bag and label by size |
+| ☐ | ☐ | Screwdrivers / Allen keys | set | To fit the original screws and M2.5, M3, M4 |
 | ☐ | ☐ | Bench clamps | 2 | Backup if the venue table cannot take screws |
 
 ## Ultrasound
@@ -52,8 +54,8 @@ left blank in the Back column is still at the venue.
 | Out | Back | Item | Qty | Notes |
 |:-:|:-:|---|:-:|---|
 | ☐ | ☐ | Extension lead / power strip | 2 | Robot, two laptops, iPad, chargers: at least 6 sockets |
-| ☐ | ☐ | Plug adapters | as needed | If the venue is abroad |
-| ☐ | ☐ | Tape / barrier for the keep-out zone | 1 | Mark the arm's 450 mm reach on the table |
+| ☐ | ☐ | Tape / barrier for the keep-out zone | 1 | Mark 450 mm around the base — **front and back** |
+| ☐ | ☐ | Marker pens | 2 | Labels, marking the table, the checklist |
 | ☐ | ☐ | "Robot in operation" sign | 1 | |
 
 ## Documents
@@ -80,16 +82,16 @@ left blank in the Back column is still at the venue.
 
 | Done | Check |
 |:-:|---|
-| ☐ | Arm bolted down, e-stop within the operator's reach |
+| ☐ | Arm bolted to the wooden plate, e-stop within the operator's reach |
+| ☐ | 450 mm workspace marked all the way round, front and back — manual §1 |
 | ☐ | Arm unfolded with DobotStudio Pro — manual §3 |
 | ☐ | Program running, LED flashing green slowly — manual §4 |
 | ☐ | Controller drives all six directions; homing key works |
-| ☐ | Keep-out zone marked |
 
 ## Packing up
 
 | Done | Check |
 |:-:|---|
 | ☐ | Arm folded into **packing posture** with DobotStudio Pro before power-off |
-| ☐ | Every **Back** box above ticked — especially e-stop, screws and chargers |
+| ☐ | Every **Back** box above ticked — especially e-stop, all screws and chargers |
 | ☐ | Gel wiped off probes and phantom before they go in the bag |
