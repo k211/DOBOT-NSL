@@ -29,6 +29,7 @@ def launch_setup(context, *args, **kwargs):
     initial_positions_file = os.path.join(bringup_dir, 'config', 'initial_positions_e6.yaml')
     robot_ip = LaunchConfiguration('robot_ip').perform(context)
     probe = LaunchConfiguration('probe').perform(context).lower() in ('true', '1', 'yes')
+    collision_level = int(LaunchConfiguration('collision_level').perform(context))
 
     # Same wrapper xacro as sim: gazebo/ros2_control tags are inert without gz.
     robot_description = xacro.process_file(
@@ -55,7 +56,8 @@ def launch_setup(context, *args, **kwargs):
         package='dobot_e6_hw',
         executable='dobot_tcp_node.py',
         name='dobot_tcp_node',
-        parameters=[{'robot_ip': robot_ip, 'probe': probe}],
+        parameters=[{'robot_ip': robot_ip, 'probe': probe,
+                     'collision_level': collision_level}],
         output='screen',
     )
 
@@ -137,6 +139,9 @@ def generate_launch_description():
                               description='Teleop pivot offset from the flange, m (Link6 Y)'),
         DeclareLaunchArgument('tcp_z', default_value='0.098',
                               description='Teleop pivot offset from the flange, m (Link6 Z)'),
+        DeclareLaunchArgument('collision_level', default_value='2',
+                              description='Collision detection sensitivity, 1 (least) '
+                                          'to 5 (most). 0 switches it off -- do not'),
         DeclareLaunchArgument('probe', default_value='true',
                               description='Is the ultrasound probe fitted? Sets the '
                                           'payload declared to the controller'),

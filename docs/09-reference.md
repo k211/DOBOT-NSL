@@ -50,6 +50,17 @@ and the controller homing key, so the two cannot disagree.
 | Pivot point (TCP), ROS | (0, 65, 98) mm, Link6 frame | `real_hw.launch.py` args `tcp_x/y/z`; `real_hw_flange.launch.py` uses (0, 0, 0) |
 | Pivot point (TCP), Windows | (0, 65, 98) mm, Dobot tool frame | `home_pose.py` → `PROBE_TCP_MM`. Assumes Dobot's frame matches Link6 — unverified |
 
+## Collision detection
+
+| | |
+|---|---|
+| Level | **2** (1 least – 5 most sensitive; 0 = off, never use) |
+| Set by | the program at every enable — `COLLISION_LEVEL` in `home_pose.py` |
+| Override | `ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1 collision_level:=3` |
+| Read back | not possible over TCP; only DobotStudio Pro shows the current level |
+
+The controller only accepts a new level while the arm is enabled.
+
 ## Where things live
 
 | | |

@@ -55,6 +55,20 @@ PROBE_TCP_MM = (0.0, 65.0, 98.0)
 PAYLOAD_CHECK = 0
 
 
+# Collision-detection sensitivity, 1 (least) to 5 (most); 0 would switch it off.
+# Set explicitly at every enable so it no longer depends on whatever DobotStudio
+# last left (that value cannot be read back over TCP). 2 was chosen after
+# repeated collision alarms during teleop with nothing touching the arm.
+# Lower means the arm must be pushed harder before it stops on contact.
+# The controller only accepts this while the arm is ENABLED (-1 when disabled).
+COLLISION_LEVEL = 2
+
+
+def set_collision_level(dash, level=COLLISION_LEVEL):
+    """Apply the collision level. Call after a successful EnableRobot."""
+    return dash.SetCollisionLevel(int(level))
+
+
 def enable_with_payload(dash, probe=True):
     """EnableRobot with the probe payload declared, or with none if probe=False."""
     if probe:

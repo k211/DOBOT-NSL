@@ -24,8 +24,8 @@ import time
 
 from dobot_api import DobotApiDashboard
 from home_pose import (HOME_ACCEL_RATIO, HOME_GLOBAL_SPEED, HOME_RAD,
-                       HOME_SPEED_RATIO, HOME_TIMEOUT_SEC, enable_with_payload,
-                       home_deg)
+                       HOME_SPEED_RATIO, HOME_TIMEOUT_SEC, COLLISION_LEVEL,
+                       enable_with_payload, home_deg, set_collision_level)
 
 MODE = {1: 'INIT', 2: 'BRAKE_OPEN', 3: 'POWEROFF', 4: 'DISABLED', 5: 'IDLE',
         6: 'DRAG', 7: 'RUNNING', 8: 'SINGLE_MOVE', 9: 'ERROR', 10: 'PAUSE', 11: 'JOG'}
@@ -89,6 +89,7 @@ def main():
     if not res.strip().startswith('0'):
         sys.exit('Enable refused — check the E-Stop is released and that '
                  'RequestControl() succeeded above')
+    print(f'SetCollisionLevel({COLLISION_LEVEL}) →', set_collision_level(dash).strip())
 
     for _ in range(10):        # wait for IDLE; flush a leftover PAUSEd queue
         m = mode_of(dash)
@@ -126,9 +127,9 @@ def main():
         print(f'  t={time.monotonic()-t0:4.1f}s mode={MODE.get(m, m)} angles={angles_of(dash)}')
         if m == 9:
             sys.exit(f'ROBOT ERROR during move — GetErrorID: {braces(dash.GetErrorID())}\n'
-                     'Look the codes up in the E6 alarm list. A collision alarm here '
-                     'means collision detection is false-triggering (payload config); '
-                     'try SetCollisionLevel(0) or fix payload in DobotStudio.')
+                     'Look the codes up in the E6 alarm list. For a collision alarm, '
+                     'check nothing is touching the arm, clear it with clear_alarm.py, '
+                     'and rerun. Do not switch collision detection off (level 0).')
         seen_running = seen_running or m == 7
         if seen_running and m == 5:
             break

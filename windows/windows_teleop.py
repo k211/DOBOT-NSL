@@ -67,7 +67,8 @@ for _p in (_HERE, os.path.join(_HERE, '..', 'src', 'dobot_e6_hw', 'scripts')):
         sys.path.insert(0, _p)
 
 from dobot_api import DobotApiDashboard          # noqa: E402
-from home_pose import PROBE_TCP_MM, enable_with_payload, home_deg   # noqa: E402
+from home_pose import (PROBE_TCP_MM, COLLISION_LEVEL, enable_with_payload,   # noqa: E402
+                       home_deg, set_collision_level)
 
 # ── configuration ───────────────────────────────────────────────────────────
 
@@ -159,6 +160,7 @@ def connect(ip, probe=True):
     print('EnableRobot    ->', res)
     if not res.startswith('0'):
         sys.exit('Enable refused -- check the E-Stop is released and the arm is powered.')
+    print(f'SetCollisionLevel({COLLISION_LEVEL}) ->', (set_collision_level(dash) or '').strip())
 
     for _ in range(20):
         m = get_mode(dash)

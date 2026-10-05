@@ -21,11 +21,13 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('robot_ip', default_value='192.168.5.1'),
         DeclareLaunchArgument('probe', default_value='true'),
+        DeclareLaunchArgument('collision_level', default_value='2'),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(base),
             launch_arguments={
                 'robot_ip': LaunchConfiguration('robot_ip'),
                 'probe': LaunchConfiguration('probe'),
+                'collision_level': LaunchConfiguration('collision_level'),
                 'tcp_x': '0.0', 'tcp_y': '0.0', 'tcp_z': '0.0',
             }.items()),
     ])

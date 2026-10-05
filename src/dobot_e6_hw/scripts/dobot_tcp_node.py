@@ -45,7 +45,8 @@ from trajectory_msgs.msg import JointTrajectory
 from dobot_api import DobotApiDashboard, DobotApiFeedBack
 from home_pose import (HOME_ACCEL_RATIO, HOME_GLOBAL_SPEED, HOME_SPEED_RATIO,
                        HOME_TIMEOUT_SEC, PROBE_COM_MM, PROBE_PAYLOAD_KG,
-                       enable_with_payload, home_deg)
+                       COLLISION_LEVEL, enable_with_payload, home_deg,
+                       set_collision_level)
 
 JOINT_NAMES = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
 ROBOT_MODE_IDLE = 5
@@ -65,6 +66,7 @@ class DobotTcpNode(Node):
         self.declare_parameter('auto_clear_error', False)
         # False when running with nothing on the flange (launch arg probe:=false).
         self.declare_parameter('probe', True)
+        self.declare_parameter('collision_level', COLLISION_LEVEL)
         # Controller homing key: deadman + EVERY button in home_buttons, held
         # for home_hold_sec. A single key within reach mid-teleop would send the
         # arm on an unexpected journey, which matters most in exactly the
@@ -176,6 +178,14 @@ class DobotTcpNode(Node):
         if res and res.strip().startswith('0'):
             self._enabled = True
             self.get_logger().info(f'EnableRobot → {res.strip()}')
+            level = int(self.get_parameter('collision_level').value)
+            with self._dash_lock:
+                cres = (set_collision_level(self._dash, level) or '').strip()
+            if cres.startswith('0'):
+                self.get_logger().info(f'Collision detection level set to {level} (1 least – 5 most sensitive)')
+            else:
+                self.get_logger().warn(f'SetCollisionLevel({level}) refused: {cres} — '
+                                       'the level DobotStudio last set is still in force')
             if probe:
                 self.get_logger().info(
                     f'Payload declared: {PROBE_PAYLOAD_KG} kg, centre of mass '
