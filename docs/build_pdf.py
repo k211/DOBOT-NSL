@@ -265,6 +265,23 @@ def main():
           'Unpacking and packing, the status lights, scanning with the probe and '
           'troubleshooting are in the full manual: github.com/k211/DOBOT-NSL')
 
+    build_checklist()
+
+
+def build_checklist():
+    """Single-page-ish checklist: no cover, no contents, just the tables."""
+    body = prepare('hardware-checklist', set())
+    css = CSS + """
+      td:first-child, td:nth-child(2), th:first-child, th:nth-child(2)
+        { width: 9mm; text-align: center; font-size: 12pt; }
+      h1 { font-size: 18pt; margin: 0 0 3mm; }
+      table { margin: 2mm 0 4mm; }
+    """
+    html = f'<style>{css}</style><h1>NSL Dobot \u2014 hardware checklist</h1>{body}'
+    out = os.path.join(HERE, 'NSL-Hardware-Checklist.pdf')
+    HTML(string=html, base_url=HERE).write_pdf(out)
+    print(f'wrote NSL-Hardware-Checklist.pdf  ({os.path.getsize(out)/1024:.0f} kB)')
+
 
 if __name__ == '__main__':
     sys.exit(main())
