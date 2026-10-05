@@ -47,7 +47,8 @@ and the controller homing key, so the two cannot disagree.
 |---|---|---|
 | Payload mass | 0.355 kg | `home_pose.py` → `PROBE_PAYLOAD_KG` |
 | Centre of mass | (−65, 0, 98) mm, flange frame | `home_pose.py` → `PROBE_COM_MM` |
-| Pivot point (TCP) | (−65, 0, 98) mm, flange frame | `probe_wrapper_e6.urdf.xacro` → `tcp_x/y/z` (ROS); `home_pose.py` → `PROBE_TCP_MM` (Windows) |
+| Pivot point (TCP), ROS | (65, 0, 98) mm, Link6 frame | `real_hw.launch.py` args `tcp_x/y/z`; `real_hw_flange.launch.py` uses (0, 0, 0) |
+| Pivot point (TCP), Windows | (−65, 0, 98) mm, Dobot tool frame | `home_pose.py` → `PROBE_TCP_MM`. Unverified |
 
 ## Where things live
 

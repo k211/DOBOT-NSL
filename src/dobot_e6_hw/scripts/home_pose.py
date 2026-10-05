@@ -40,9 +40,12 @@ HOME_TIMEOUT_SEC  = 180   # a deliberately slow ~90 deg move takes a while
 PROBE_PAYLOAD_KG = 0.355
 PROBE_COM_MM = (-65.0, 0.0, 98.0)
 
-# Tool centre point: where teleop rotations pivot, in the flange frame, mm.
-# Currently the same point as the centre of mass. The ROS stack takes it from the
-# tcp_x/y/z args of probe_wrapper_e6.urdf.xacro -- keep the two in step.
+# Tool centre point for the WINDOWS teleop only: where rotations pivot, in
+# Dobot's own flange (tool) frame, mm -- the frame SetTool() uses.
+# The ROS stack sets its pivot separately, in the URDF Link6 frame, via the
+# tcp_x/y/z launch args. On the arm, -65 mm in the Link6 frame looked wrong and
+# +65 mm was chosen instead, which suggests the two frames' X axes are opposite;
+# if so, -65 here is the same physical point. Unverified on the arm.
 PROBE_TCP_MM = (-65.0, 0.0, 98.0)
 
 # isCheck=0: do not let the controller verify the load and auto-disable on a

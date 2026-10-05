@@ -36,6 +36,11 @@ def launch_setup(context, *args, **kwargs):
         mappings={
             'simulation_controllers': controllers_file,
             'initial_positions_file': initial_positions_file,
+            # Teleop pivot point, metres in the Link6 frame. real_hw_flange.launch.py
+            # passes 0 0 0 to pivot on the bare flange instead.
+            'tcp_x': LaunchConfiguration('tcp_x').perform(context),
+            'tcp_y': LaunchConfiguration('tcp_y').perform(context),
+            'tcp_z': LaunchConfiguration('tcp_z').perform(context),
         },
     ).toxml()
 
@@ -125,6 +130,12 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('robot_ip', default_value='192.168.5.1',
                               description='E6 LAN1 wired IP'),
+        DeclareLaunchArgument('tcp_x', default_value='0.065',
+                              description='Teleop pivot offset from the flange, m (Link6 X)'),
+        DeclareLaunchArgument('tcp_y', default_value='0.0',
+                              description='Teleop pivot offset from the flange, m (Link6 Y)'),
+        DeclareLaunchArgument('tcp_z', default_value='0.098',
+                              description='Teleop pivot offset from the flange, m (Link6 Z)'),
         DeclareLaunchArgument('probe', default_value='true',
                               description='Is the ultrasound probe fitted? Sets the '
                                           'payload declared to the controller'),

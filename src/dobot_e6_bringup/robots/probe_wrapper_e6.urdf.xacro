@@ -13,9 +13,10 @@
 
   <!-- Tool centre point: where teleop rotations pivot and translations are
        measured. Offset from the flange (Link6) in metres, Link6 frame.
-       Currently the probe assembly's centre of mass (-65, 0, 98) mm; move it
-       to the probe tip if that is where rotations should pivot. -->
-  <xacro:arg name="tcp_x" default="-0.065" />
+       Default (65, 0, 98) mm. Note the X sign: -65 (the payload centre-of-mass
+       value, given in Dobot's flange frame) made rotations look wrong on the
+       arm, which suggests Link6's X axis is opposite to Dobot's. -->
+  <xacro:arg name="tcp_x" default="0.065" />
   <xacro:arg name="tcp_y" default="0.0" />
   <xacro:arg name="tcp_z" default="0.098" />
   <xacro:property name="initial_positions"

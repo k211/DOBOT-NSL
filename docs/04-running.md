@@ -53,6 +53,10 @@ ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1
 
 ---
 
+To pivot rotations on the bare flange instead of the probe, launch
+`real_hw_flange.launch.py` with the same arguments.
+[See §5](05-joystick.md#rotations-pivot-on-the-probe).
+
 ## What a good startup looks like
 
 ![Startup timeline](img/startup-timeline.svg)
