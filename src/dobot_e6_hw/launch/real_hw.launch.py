@@ -28,6 +28,7 @@ def launch_setup(context, *args, **kwargs):
     controllers_file = os.path.join(bringup_dir, 'config', 'ros2_controllers.yaml')
     initial_positions_file = os.path.join(bringup_dir, 'config', 'initial_positions_e6.yaml')
     robot_ip = LaunchConfiguration('robot_ip').perform(context)
+    probe = LaunchConfiguration('probe').perform(context).lower() in ('true', '1', 'yes')
 
     # Same wrapper xacro as sim: gazebo/ros2_control tags are inert without gz.
     robot_description = xacro.process_file(
@@ -49,7 +50,7 @@ def launch_setup(context, *args, **kwargs):
         package='dobot_e6_hw',
         executable='dobot_tcp_node.py',
         name='dobot_tcp_node',
-        parameters=[{'robot_ip': robot_ip}],
+        parameters=[{'robot_ip': robot_ip, 'probe': probe}],
         output='screen',
     )
 
@@ -124,5 +125,8 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('robot_ip', default_value='192.168.5.1',
                               description='E6 LAN1 wired IP'),
+        DeclareLaunchArgument('probe', default_value='true',
+                              description='Is the ultrasound probe fitted? Sets the '
+                                          'payload declared to the controller'),
         OpaqueFunction(function=launch_setup),
     ])

@@ -25,21 +25,53 @@ assembled tool rather than guessing.
 
 ### Software — tell the controller about the load
 
-> ⚠️ **Not yet configured — action needed before the exhibition.**
->
-> The program currently enables the arm declaring a payload of **0 kg**. That was
-> deliberate during commissioning: a zero payload skips the controller's load
-> check, which otherwise refuses to enable when the configured weight does not
-> match reality.
->
-> With a probe fitted and the payload still zero, the controller's internal model
-> of the arm is wrong. The practical consequence is **collision detection firing
-> spuriously** — the arm reads the probe's weight as an unexplained force — plus
-> slightly degraded gravity compensation.
->
-> The fix is one `SetPayload()` call with the real mass and its offset from the
-> flange, wired into startup. **This has not been implemented yet.** Weigh the
-> probe assembly first.
+The probe payload is declared to the controller every time the arm is enabled:
+
+| | |
+|---|---|
+| Mass | **355 g** (probe + holder) |
+| Centre of mass | X **−65 mm**, Y **0 mm**, Z **98 mm**, in the flange (tool) frame |
+
+These live in `src/dobot_e6_hw/scripts/home_pose.py` (`PROBE_PAYLOAD_KG`,
+`PROBE_COM_MM`). If the probe or holder changes, re-weigh it and update them.
+
+**Running without the probe?** Tell the software, so the declared load matches
+what is on the flange:
+
+```bash
+python3 src/dobot_e6_hw/scripts/go_home.py --speed 5 --no-probe
+ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1 probe:=false
+```
+
+Use the same setting for both commands.
+
+### What if the payload is declared but the probe is not fitted?
+
+Nothing dangerous, but the controller's model is wrong by the weight of the
+probe. In practice:
+
+- **The arm still moves correctly.** It is position controlled, so it still goes
+  where the joystick sends it. The error in its internal force model is about
+  **3.5 N** (355 g × gravity) at roughly 120 mm from the flange — small next to
+  what the arm can carry.
+- **Collision detection may trip when nothing has hit anything.** The controller
+  expects to work harder than it does, and reads the difference as an outside
+  force pushing the tool **upward**. That can raise a collision alarm (red light,
+  arm stops), most likely during quick moves and when the wrist is tilted.
+- **It cannot detect that the probe is missing.** The automatic load check is
+  switched off on purpose (`PAYLOAD_CHECK = 0`), because a false trip of that
+  check would disable the arm mid-demonstration. So the mistake will not be
+  flagged for you.
+- The **opposite mistake** — probe fitted, payload not declared — has the same
+  effect in the other direction.
+
+**If you see collision alarms with nothing touching the arm, check that the probe
+setting matches what is on the flange.** Then do the full restart in
+[§7](07-troubleshooting.md).
+
+These effects come from how the controller's model works; the size of the
+collision threshold on this arm has not been measured, so how often a false
+alarm actually happens is unknown.
 
 ### Re-home after fitting
 

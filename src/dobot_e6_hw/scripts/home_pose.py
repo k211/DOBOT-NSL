@@ -33,6 +33,27 @@ HOME_GLOBAL_SPEED = 40    # SpeedFactor — global ratio multiplied into the abo
 HOME_TIMEOUT_SEC  = 180   # a deliberately slow ~90 deg move takes a while
 
 
+# Probe payload: probe + 3D-printed holder, as fitted for the NSL demonstration.
+# Centre of mass is in the robot's default tool frame (the flange), in mm.
+# Declared to the controller at every enable so its dynamic model -- and with it
+# collision detection -- matches what is actually on the flange.
+PROBE_PAYLOAD_KG = 0.355
+PROBE_COM_MM = (-65.0, 0.0, 98.0)
+
+# isCheck=0: do not let the controller verify the load and auto-disable on a
+# mismatch. That check is untested on this arm, and a false trip would block the
+# demonstration; running without the probe is handled by an explicit switch
+# instead (probe:=false / --no-probe).
+PAYLOAD_CHECK = 0
+
+
+def enable_with_payload(dash, probe=True):
+    """EnableRobot with the probe payload declared, or with none if probe=False."""
+    if probe:
+        return dash.EnableRobot(PROBE_PAYLOAD_KG, *PROBE_COM_MM, isCheck=PAYLOAD_CHECK)
+    return dash.EnableRobot()
+
+
 def home_deg():
     """Home pose in degrees, as the Dobot TCP API expects it."""
     return [round(math.degrees(q), 3) for q in HOME_RAD]

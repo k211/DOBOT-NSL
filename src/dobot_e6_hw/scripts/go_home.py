@@ -24,7 +24,8 @@ import time
 
 from dobot_api import DobotApiDashboard
 from home_pose import (HOME_ACCEL_RATIO, HOME_GLOBAL_SPEED, HOME_RAD,
-                       HOME_SPEED_RATIO, HOME_TIMEOUT_SEC, home_deg)
+                       HOME_SPEED_RATIO, HOME_TIMEOUT_SEC, enable_with_payload,
+                       home_deg)
 
 MODE = {1: 'INIT', 2: 'BRAKE_OPEN', 3: 'POWEROFF', 4: 'DISABLED', 5: 'IDLE',
         6: 'DRAG', 7: 'RUNNING', 8: 'SINGLE_MOVE', 9: 'ERROR', 10: 'PAUSE', 11: 'JOG'}
@@ -62,6 +63,8 @@ def main():
     ap.add_argument('--global-speed', type=int, default=GLOBAL_SPEED,
                     dest='global_speed',
                     help=f'SpeedFactor global ratio 1-100 (default {GLOBAL_SPEED})')
+    ap.add_argument('--no-probe', action='store_true',
+                    help='the probe is NOT fitted: enable without declaring its payload')
     args = ap.parse_args()
     for name in ('speed', 'accel', 'global_speed'):
         v = getattr(args, name)
@@ -80,7 +83,8 @@ def main():
 
     print('mode:', MODE.get(mode_of(dash)), ' errors:', braces(dash.GetErrorID()))
     print('ClearError →', dash.ClearError().strip())
-    res = dash.EnableRobot()   # load=0 kg — no payload check to fail
+    res = enable_with_payload(dash, probe=not args.no_probe)
+    print('payload:', 'none (--no-probe)' if args.no_probe else 'probe declared')
     print('EnableRobot →', res.strip())
     if not res.strip().startswith('0'):
         sys.exit('Enable refused — check the E-Stop is released and that '

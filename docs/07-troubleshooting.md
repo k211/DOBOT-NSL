@@ -78,7 +78,7 @@ feel rumble as a joint nears its limit.
 | Red light | Alarm or collision detected | Full restart. If it returns immediately, power-cycle the arm |
 | Controller does nothing at all | USB not detected | Unplug and replug. Check `ls /dev/input/js0`. Restart the program |
 | Arm drifts with nobody touching anything | Stick drift on a worn controller | Release L1. Restart; if it persists the controller needs replacing |
-| Collision alarms while scanning | Payload still declared as 0 kg | [See §6](06-scanning.md#software--tell-the-controller-about-the-load) |
+| Collision alarms with nothing touching the arm | Probe setting does not match what is on the flange — probe declared but not fitted, or the reverse | Match `probe:=true/false` to the flange, then full restart. [See §6](06-scanning.md#what-if-the-payload-is-declared-but-the-probe-is-not-fitted) |
 
 ## Does it need a restart?
 

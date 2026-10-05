@@ -79,7 +79,7 @@ Work through this the day before, not on the morning.
 - [ ] Controller drives all six directions — [§5](05-joystick.md)
 - [ ] Homing key works: **L1 + L2 + R2** held one second
 - [ ] Probe fitted, assembly weighed, **under 750 g**
-- [ ] ⚠️ **Payload declared in software** — [§6](06-scanning.md). **Not yet implemented**
+- [ ] Probe fitted, or `probe:=false` / `--no-probe` if it is not — [§6](06-scanning.md)
 - [ ] Phantom positioned so the arm can reach it without stretching to full extent
 - [ ] Spare USB-C cable for the controller
 - [ ] Windows laptop available for pack-down — [§3](03-setup.md)
@@ -89,9 +89,9 @@ Work through this the day before, not on the morning.
 
 | Gap | Impact | Status |
 |---|---|---|
-| Payload is declared as 0 kg | Collision detection may fire spuriously once the probe is fitted | **Needs doing** — weigh the probe first |
 | No force/torque sensor | No contact-force feedback or force control while scanning | Hardware not fitted |
 | `ServoP` untested | The Windows teleop depends on it | Run `--probe` on the real arm first |
+| Payload declaration untested on the arm | Written while the robot was off; the enable command with the payload has not been run yet | Check the launch log shows `Payload declared` and no alarm |
 
 ---
 

@@ -44,7 +44,8 @@ from trajectory_msgs.msg import JointTrajectory
 # Vendored from Dobot-Arm/TCP-IP-Python-V4 (MIT), installed alongside this node.
 from dobot_api import DobotApiDashboard, DobotApiFeedBack
 from home_pose import (HOME_ACCEL_RATIO, HOME_GLOBAL_SPEED, HOME_SPEED_RATIO,
-                       HOME_TIMEOUT_SEC, home_deg)
+                       HOME_TIMEOUT_SEC, PROBE_COM_MM, PROBE_PAYLOAD_KG,
+                       enable_with_payload, home_deg)
 
 JOINT_NAMES = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
 ROBOT_MODE_IDLE = 5
@@ -62,6 +63,8 @@ class DobotTcpNode(Node):
         # Dobot advises >= 30 ms per ServoJ tick (~33 Hz), matching Servo's rate.
         self.declare_parameter('servo_period', 0.03)
         self.declare_parameter('auto_clear_error', False)
+        # False when running with nothing on the flange (launch arg probe:=false).
+        self.declare_parameter('probe', True)
         # Controller homing key: deadman + EVERY button in home_buttons, held
         # for home_hold_sec. A single key within reach mid-teleop would send the
         # arm on an unexpected journey, which matters most in exactly the
@@ -161,8 +164,9 @@ class DobotTcpNode(Node):
         if not self._has_control and not self._request_control():
             return
         try:
+            probe = bool(self.get_parameter('probe').value)
             with self._dash_lock:
-                res = self._dash.EnableRobot()
+                res = enable_with_payload(self._dash, probe)
         except Exception as e:
             self.get_logger().error(
                 f'EnableRobot got no reply ({e}) — is the robot in TCP mode '
@@ -172,6 +176,14 @@ class DobotTcpNode(Node):
         if res and res.strip().startswith('0'):
             self._enabled = True
             self.get_logger().info(f'EnableRobot → {res.strip()}')
+            if probe:
+                self.get_logger().info(
+                    f'Payload declared: {PROBE_PAYLOAD_KG} kg, centre of mass '
+                    f'{PROBE_COM_MM} mm. Launch with probe:=false if the probe '
+                    'is NOT fitted.')
+            else:
+                self.get_logger().warn('probe:=false — NO payload declared. '
+                                       'Do not fit the probe while running like this.')
         else:
             self.get_logger().warn(f'EnableRobot refused: {res!r} — retrying in 3 s '
                                    '(clear alarms / check E-Stop)')

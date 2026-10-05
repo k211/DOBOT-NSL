@@ -30,6 +30,8 @@ python3 src/dobot_e6_hw/scripts/go_home.py --speed 5
 
 ⏱ Wait until it prints **`Arm at home pose`**.
 
+Probe **not** fitted? Add `--no-probe` here and `probe:=false` in step 5.
+
 **5. Start the program**
 
 ```bash

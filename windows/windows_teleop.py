@@ -67,7 +67,7 @@ for _p in (_HERE, os.path.join(_HERE, '..', 'src', 'dobot_e6_hw', 'scripts')):
         sys.path.insert(0, _p)
 
 from dobot_api import DobotApiDashboard          # noqa: E402
-from home_pose import home_deg                   # noqa: E402
+from home_pose import enable_with_payload, home_deg   # noqa: E402
 
 # ── configuration ───────────────────────────────────────────────────────────
 
@@ -130,7 +130,7 @@ def get_mode(dash):
     return int(body) if body else -1
 
 
-def connect(ip):
+def connect(ip, probe=True):
     """Open the dashboard socket, claim control, clear alarms and enable."""
     print(f'connecting to {ip}:29999 ...')
     dash = DobotApiDashboard(ip, 29999)
@@ -145,7 +145,8 @@ def connect(ip):
     # survive a power cycle, so it runs every time.
     print('RequestControl ->', (dash.RequestControl() or '').strip())
     print('ClearError     ->', (dash.ClearError() or '').strip())
-    res = (dash.EnableRobot() or '').strip()      # load=0 kg skips the payload check
+    res = (enable_with_payload(dash, probe) or '').strip()
+    print('payload        ->', 'probe declared' if probe else 'none (--no-probe)')
     print('EnableRobot    ->', res)
     if not res.startswith('0'):
         sys.exit('Enable refused -- check the E-Stop is released and the arm is powered.')
@@ -242,13 +243,13 @@ def run_map():
         print('\nbuttons seen:', sorted(seen) or 'none')
 
 
-def run_probe(ip):
+def run_probe(ip, probe=True):
     """Move a small distance along each Cartesian axis and report what changed.
 
     This is how you determine the sign constants without guessing. The ROS-frame
     signs do NOT carry over -- the Dobot uses its own coordinate frame.
     """
-    dash = connect(ip)
+    dash = connect(ip, probe)
     try:
         step, period = 12.0, 0.03
         for ax in ('x', 'y', 'z'):
@@ -270,9 +271,9 @@ def run_probe(ip):
         shutdown(dash)
 
 
-def run_teleop(ip):
+def run_teleop(ip, probe=True):
     pygame, pad = open_pad()
-    dash = connect(ip)
+    dash = connect(ip, probe)
     period = 1.0 / RATE_HZ
     lead_every = max(1, int(RATE_HZ / LEAD_CHECK_HZ))
 
@@ -376,14 +377,16 @@ def main():
                    help='print live gamepad indices; does not touch the robot')
     g.add_argument('--probe', action='store_true',
                    help='nudge each Cartesian axis to determine the sign constants')
+    ap.add_argument('--no-probe', action='store_true',
+                    help='the probe is NOT fitted: enable without declaring its payload')
     args = ap.parse_args()
 
     if args.map:
         run_map()
     elif args.probe:
-        run_probe(args.ip)
+        run_probe(args.ip, not args.no_probe)
     else:
-        run_teleop(args.ip)
+        run_teleop(args.ip, not args.no_probe)
 
 
 if __name__ == '__main__':
