@@ -13,6 +13,7 @@ install(PROGRAMS
   scripts/dobot_tcp_node.py
   scripts/dobot_api.py
   scripts/go_home.py
+  scripts/clear_alarm.py
   scripts/home_pose.py
   DESTINATION lib/${PROJECT_NAME}
 )
