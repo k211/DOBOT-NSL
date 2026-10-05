@@ -43,10 +43,10 @@ PROBE_COM_MM = (0.0, 65.0, 0.0)
 # Tool centre point for the WINDOWS teleop: the probe FACE, where rotations
 # pivot. This is not the centre of mass above -- they are different points.
 # The ROS stack sets the same point via the tcp_x/y/z launch args, measured as
-# (0, 65, 98) mm in the URDF Link6 frame. SetTool() works in Dobot's own flange
+# (65, 0, 98) mm in the URDF Link6 frame. SetTool() works in Dobot's own flange
 # frame; that the two frames agree is assumed, not verified -- check with
 # windows_teleop.py --probe before relying on it.
-PROBE_TCP_MM = (0.0, 65.0, 98.0)
+PROBE_TCP_MM = (65.0, 0.0, 98.0)
 
 # isCheck=0: do not let the controller verify the load and auto-disable on a
 # mismatch. That check is untested on this arm, and a false trip would block the

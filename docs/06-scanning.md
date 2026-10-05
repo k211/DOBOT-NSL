@@ -31,7 +31,7 @@ The probe payload is declared to the controller every time the arm is enabled:
 |---|---|
 | Mass | **355 g** (probe + holder) |
 | Centre of mass | X **0 mm**, Y **65 mm**, Z **0 mm**, in the flange (tool) frame |
-| Probe face (teleop pivot) | X 0 mm, Y 65 mm, Z 98 mm — a different point, see [§5](05-joystick.md) |
+| Probe face (teleop pivot) | X 65 mm, Y 0 mm, Z 98 mm — a different point, see [§5](05-joystick.md) |
 
 These live in `src/dobot_e6_hw/scripts/home_pose.py` (`PROBE_PAYLOAD_KG`,
 `PROBE_COM_MM`). If the probe or holder changes, re-weigh it and update them.

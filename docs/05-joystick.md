@@ -33,19 +33,19 @@ deliberately left unused.
 
 Roll, pitch and yaw turn the arm **about the probe face**, not about the bare
 flange — the point stays where it is and the arm swings around it. That point is
-**0 mm X, 65 mm Y, 98 mm Z** from the flange. Translations move that same point.
+**65 mm X, 0 mm Y, 98 mm Z** from the flange. Translations move that same point.
 
 Two launch files, identical apart from the pivot:
 
 | Launch file | Rotations pivot on |
 |---|---|
-| `real_hw.launch.py` | **the probe**, (0, 65, 98) mm |
+| `real_hw.launch.py` | **the probe**, (65, 0, 98) mm |
 | `real_hw_flange.launch.py` | **the bare flange**, (0, 0, 0) |
 
 To try another pivot without editing anything, pass it in metres:
 
 ```bash
-ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1 tcp_x:=0.065 tcp_y:=0.0 tcp_z:=0.098   # the earlier (65, 0, 98)
+ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1 tcp_x:=0.0 tcp_y:=0.065 tcp_z:=0.098   # the alternative (0, 65, 98)
 ```
 
 Homing is the same in both: it goes to fixed joint angles and does not use the

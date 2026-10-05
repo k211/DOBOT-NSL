@@ -47,8 +47,8 @@ and the controller homing key, so the two cannot disagree.
 |---|---|---|
 | Payload mass | 0.355 kg | `home_pose.py` → `PROBE_PAYLOAD_KG` |
 | Centre of mass | (0, 65, 0) mm, flange frame | `home_pose.py` → `PROBE_COM_MM` |
-| Pivot point (TCP), ROS | (0, 65, 98) mm, Link6 frame | `real_hw.launch.py` args `tcp_x/y/z`; `real_hw_flange.launch.py` uses (0, 0, 0) |
-| Pivot point (TCP), Windows | (0, 65, 98) mm, Dobot tool frame | `home_pose.py` → `PROBE_TCP_MM`. Assumes Dobot's frame matches Link6 — unverified |
+| Pivot point (TCP), ROS | (65, 0, 98) mm, Link6 frame | `real_hw.launch.py` args `tcp_x/y/z`; `real_hw_flange.launch.py` uses (0, 0, 0) |
+| Pivot point (TCP), Windows | (65, 0, 98) mm, Dobot tool frame | `home_pose.py` → `PROBE_TCP_MM`. Assumes Dobot's frame matches Link6 — unverified |
 
 ## Collision detection
 
