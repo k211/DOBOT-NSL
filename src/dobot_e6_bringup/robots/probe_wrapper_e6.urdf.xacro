@@ -10,6 +10,14 @@
 
   <xacro:arg name="simulation_controllers" default="" />
   <xacro:arg name="initial_positions_file" default="" />
+
+  <!-- Tool centre point: where teleop rotations pivot and translations are
+       measured. Offset from the flange (Link6) in metres, Link6 frame.
+       Currently the probe assembly's centre of mass (-65, 0, 98) mm; move it
+       to the probe tip if that is where rotations should pivot. -->
+  <xacro:arg name="tcp_x" default="-0.065" />
+  <xacro:arg name="tcp_y" default="0.0" />
+  <xacro:arg name="tcp_z" default="0.098" />
   <xacro:property name="initial_positions"
                   value="${xacro.load_yaml('$(arg initial_positions_file)')}" />
 
@@ -39,6 +47,16 @@
       <inertia ixx="4.5e-5" ixy="0" ixz="0" iyy="4.5e-5" iyz="0" izz="5.6e-6" />
     </inertial>
   </link>
+
+  <!-- Tool centre point. MoveIt Servo's chain ends here (servo_moveit_params.yaml),
+       so its Jacobian, and therefore every teleop rotation, is about this point, not
+       the bare flange. -->
+  <link name="probe_tcp" />
+  <joint name="probe_tcp_joint" type="fixed">
+    <parent link="Link6" />
+    <child link="probe_tcp" />
+    <origin xyz="$(arg tcp_x) $(arg tcp_y) $(arg tcp_z)" rpy="0 0 0" />
+  </joint>
 
   <!-- FIXED joint to the flange. The FT sensor reads the wrench through it. -->
   <joint name="us_probe_joint" type="fixed">

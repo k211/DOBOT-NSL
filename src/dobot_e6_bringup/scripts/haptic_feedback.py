@@ -104,7 +104,7 @@ FORCE_MAX          = 400.0  # N — at/above this, full-strength force rumble
 FORCE_FLOOR        = 0.30   # min intensity the instant force crosses the threshold
 
 ARM_JOINTS             = [f'joint{i}' for i in range(1, 7)]  # ME6: joint1..joint6
-EE_FRAME_CANDIDATES    = ['Link6', 'us_probe_link']  # ME6 flange, then probe
+EE_FRAME_CANDIDATES    = ['probe_tcp', 'Link6', 'us_probe_link']  # same point Servo uses
 INTENSITY_DEADBAND     = 0.04
 EFFECT_DURATION_MS     = 300    # effect length; refreshed every 100 ms → continuous
 LOG_INTERVAL           = 3.0

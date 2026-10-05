@@ -67,7 +67,7 @@ for _p in (_HERE, os.path.join(_HERE, '..', 'src', 'dobot_e6_hw', 'scripts')):
         sys.path.insert(0, _p)
 
 from dobot_api import DobotApiDashboard          # noqa: E402
-from home_pose import enable_with_payload, home_deg   # noqa: E402
+from home_pose import PROBE_TCP_MM, enable_with_payload, home_deg   # noqa: E402
 
 # ── configuration ───────────────────────────────────────────────────────────
 
@@ -147,6 +147,15 @@ def connect(ip, probe=True):
     print('ClearError     ->', (dash.ClearError() or '').strip())
     res = (enable_with_payload(dash, probe) or '').strip()
     print('payload        ->', 'probe declared' if probe else 'none (--no-probe)')
+
+    # ServoP poses are those of the robot's global tool frame. Put tool 1 at the
+    # probe so rotations pivot there rather than on the bare flange (tool 0).
+    if probe:
+        tcp = '{%g,%g,%g,0,0,0}' % PROBE_TCP_MM
+        print('SetTool(1)     ->', (dash.SetTool(1, tcp) or '').strip(), tcp)
+        print('Tool(1)        ->', (dash.Tool(1) or '').strip())
+    else:
+        print('Tool(0)        ->', (dash.Tool(0) or '').strip(), '(flange)')
     print('EnableRobot    ->', res)
     if not res.startswith('0'):
         sys.exit('Enable refused -- check the E-Stop is released and the arm is powered.')

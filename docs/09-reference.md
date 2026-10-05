@@ -41,6 +41,14 @@ J3  117.25°      J6    0.00°
 Defined once in `src/dobot_e6_hw/scripts/home_pose.py` and shared by `go_home.py`
 and the controller homing key, so the two cannot disagree.
 
+## Probe: payload and pivot point
+
+| | Value | Defined in |
+|---|---|---|
+| Payload mass | 0.355 kg | `home_pose.py` → `PROBE_PAYLOAD_KG` |
+| Centre of mass | (−65, 0, 98) mm, flange frame | `home_pose.py` → `PROBE_COM_MM` |
+| Pivot point (TCP) | (−65, 0, 98) mm, flange frame | `probe_wrapper_e6.urdf.xacro` → `tcp_x/y/z` (ROS); `home_pose.py` → `PROBE_TCP_MM` (Windows) |
+
 ## Where things live
 
 | | |

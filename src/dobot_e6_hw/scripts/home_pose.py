@@ -40,6 +40,11 @@ HOME_TIMEOUT_SEC  = 180   # a deliberately slow ~90 deg move takes a while
 PROBE_PAYLOAD_KG = 0.355
 PROBE_COM_MM = (-65.0, 0.0, 98.0)
 
+# Tool centre point: where teleop rotations pivot, in the flange frame, mm.
+# Currently the same point as the centre of mass. The ROS stack takes it from the
+# tcp_x/y/z args of probe_wrapper_e6.urdf.xacro -- keep the two in step.
+PROBE_TCP_MM = (-65.0, 0.0, 98.0)
+
 # isCheck=0: do not let the controller verify the load and auto-disable on a
 # mismatch. That check is untested on this arm, and a false trip would block the
 # demonstration; running without the probe is handled by an explicit switch

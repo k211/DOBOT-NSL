@@ -9,7 +9,7 @@ servo_node:
 
       move_group_name: "manipulator"
       planning_frame: "base_link"
-      ee_frame_name: "Link6"
+      ee_frame_name: "probe_tcp"
       robot_link_command_frame: "base_link"
 
       # joy_to_servo.py publishes real m/s and rad/s values.

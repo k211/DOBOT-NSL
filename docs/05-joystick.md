@@ -29,6 +29,17 @@ The PS button is unusable: the index exists in the controller's button array but
 the press never reaches the software, because something upstream grabs it. It was
 deliberately left unused.
 
+## Rotations pivot on the probe
+
+Roll, pitch and yaw turn the arm **about the probe point**, not about the bare
+flange — the point stays where it is and the arm swings around it. That point is
+**−65 mm X, 0 mm Y, 98 mm Z** from the flange, in the flange frame.
+Translations move that same point.
+
+To move the pivot (for example to the probe tip), change `tcp_x`, `tcp_y`,
+`tcp_z` in `src/dobot_e6_bringup/robots/probe_wrapper_e6.urdf.xacro` (metres)
+and `PROBE_TCP_MM` in `src/dobot_e6_hw/scripts/home_pose.py` (mm), then restart.
+
 ## Directions are from where you stand
 
 ![Operator frame](img/operator-frame.svg)
