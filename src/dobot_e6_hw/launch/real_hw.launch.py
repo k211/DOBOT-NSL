@@ -130,9 +130,10 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('robot_ip', default_value='192.168.5.1',
                               description='E6 LAN1 wired IP'),
-        DeclareLaunchArgument('tcp_x', default_value='0.065',
+        # (0.065, 0, 0.098) also tested and worked; Y-offset version is current.
+        DeclareLaunchArgument('tcp_x', default_value='0.0',
                               description='Teleop pivot offset from the flange, m (Link6 X)'),
-        DeclareLaunchArgument('tcp_y', default_value='0.0',
+        DeclareLaunchArgument('tcp_y', default_value='0.065',
                               description='Teleop pivot offset from the flange, m (Link6 Y)'),
         DeclareLaunchArgument('tcp_z', default_value='0.098',
                               description='Teleop pivot offset from the flange, m (Link6 Z)'),
