@@ -14,7 +14,7 @@
   <!-- Tool centre point: where teleop rotations pivot and translations are
        measured. Offset from the flange (Link6) in metres, Link6 frame.
        Default (0, 65, 98) mm: the probe FACE. This is not the payload centre
-       of mass (-65, 0, 98) declared in home_pose.py; the two are different
+       of mass (0, 65, 50) declared in home_pose.py; the two are different
        points. -->
   <xacro:arg name="tcp_x" default="0.0" />
   <xacro:arg name="tcp_y" default="0.065" />

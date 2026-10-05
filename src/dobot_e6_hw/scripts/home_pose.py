@@ -38,7 +38,7 @@ HOME_TIMEOUT_SEC  = 180   # a deliberately slow ~90 deg move takes a while
 # Declared to the controller at every enable so its dynamic model -- and with it
 # collision detection -- matches what is actually on the flange.
 PROBE_PAYLOAD_KG = 0.355
-PROBE_COM_MM = (-65.0, 0.0, 98.0)
+PROBE_COM_MM = (0.0, 65.0, 50.0)
 
 # Tool centre point for the WINDOWS teleop: the probe FACE, where rotations
 # pivot. This is not the centre of mass above -- they are different points.
