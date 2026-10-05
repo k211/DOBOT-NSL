@@ -13,9 +13,9 @@
 
   <!-- Tool centre point: where teleop rotations pivot and translations are
        measured. Offset from the flange (Link6) in metres, Link6 frame.
-       Default (0, 65, 98) mm; (65, 0, 98) also tested. Note the X sign: -65 (the payload centre-of-mass
-       value, given in Dobot's flange frame) made rotations look wrong on the
-       arm, which suggests Link6's X axis is opposite to Dobot's. -->
+       Default (0, 65, 98) mm: the probe FACE. This is not the payload centre
+       of mass (-65, 0, 98) declared in home_pose.py; the two are different
+       points. -->
   <xacro:arg name="tcp_x" default="0.0" />
   <xacro:arg name="tcp_y" default="0.065" />
   <xacro:arg name="tcp_z" default="0.098" />

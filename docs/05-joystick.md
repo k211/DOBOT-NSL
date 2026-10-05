@@ -31,7 +31,7 @@ deliberately left unused.
 
 ## Rotations pivot on the probe
 
-Roll, pitch and yaw turn the arm **about the probe point**, not about the bare
+Roll, pitch and yaw turn the arm **about the probe face**, not about the bare
 flange — the point stays where it is and the arm swings around it. That point is
 **0 mm X, 65 mm Y, 98 mm Z** from the flange. Translations move that same point.
 

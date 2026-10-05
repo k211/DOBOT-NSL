@@ -40,13 +40,13 @@ HOME_TIMEOUT_SEC  = 180   # a deliberately slow ~90 deg move takes a while
 PROBE_PAYLOAD_KG = 0.355
 PROBE_COM_MM = (-65.0, 0.0, 98.0)
 
-# Tool centre point for the WINDOWS teleop only: where rotations pivot, in
-# Dobot's own flange (tool) frame, mm -- the frame SetTool() uses.
-# The ROS stack sets its pivot separately, in the URDF Link6 frame, via the
-# tcp_x/y/z launch args. On the arm, -65 mm in the Link6 frame looked wrong and
-# +65 mm was chosen instead, which suggests the two frames' X axes are opposite;
-# if so, -65 here is the same physical point. Unverified on the arm.
-PROBE_TCP_MM = (-65.0, 0.0, 98.0)
+# Tool centre point for the WINDOWS teleop: the probe FACE, where rotations
+# pivot. This is not the centre of mass above -- they are different points.
+# The ROS stack sets the same point via the tcp_x/y/z launch args, measured as
+# (0, 65, 98) mm in the URDF Link6 frame. SetTool() works in Dobot's own flange
+# frame; that the two frames agree is assumed, not verified -- check with
+# windows_teleop.py --probe before relying on it.
+PROBE_TCP_MM = (0.0, 65.0, 98.0)
 
 # isCheck=0: do not let the controller verify the load and auto-disable on a
 # mismatch. That check is untested on this arm, and a false trip would block the
