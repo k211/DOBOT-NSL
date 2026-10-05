@@ -68,16 +68,6 @@ left blank in the Back column is still at the venue.
 
 ---
 
-## The night before
-
-| Done | Check |
-|:-:|---|
-| ☐ | Everything above charged: probes, iPad, both laptops, both controllers |
-| ☐ | Dell laptop: `nmcli con up dobot-e6` profile still present, repo up to date |
-| ☐ | Lenovo laptop: DobotStudio Pro opens and connects |
-| ☐ | Probe holder fits the probe and the flange |
-| ☐ | Probe assembly weighed — **under 750 g** |
-
 ## At the venue, before visitors
 
 | Done | Check |
