@@ -14,7 +14,7 @@ to know what the arm is doing.
 | 🟢 **Green, steady** | Enabled and idle | Normal just after launch |
 | 🟢 **Green, slow flash** | Running under remote commands | **Normal while teleop is live** |
 | 🟢 **Green, fast flash** | Jogging, drag mode, or recording | Not used by this setup — investigate |
-| 🟡 **Yellow** | **Collision detected** — the arm has stopped and paused | `Ctrl+C`, check nothing is touching the arm, then [restart](07-troubleshooting.md#the-full-restart) |
+| 🟡 **Yellow** | **Collision detected** — the arm has stopped and paused | `Ctrl+C`, check nothing is touching the arm, then [clear it](07-troubleshooting.md#clearing-a-yellow-light) |
 | 🔴 **Red, steady** | **Alarm, or collision detected** | Stop. [Troubleshooting →](07-troubleshooting.md) |
 
 Fast flash is about 5 per second, slow about 1 per second.

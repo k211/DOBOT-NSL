@@ -82,6 +82,28 @@ feel rumble as a joint nears its limit.
 | Arm drifts with nobody touching anything | Stick drift on a worn controller | Release L1. Restart; if it persists the controller needs replacing |
 | Collision alarms with nothing touching the arm | Probe setting does not match what is on the flange — probe declared but not fitted, or the reverse | Match `probe:=true/false` to the flange, then full restart. [See §6](06-scanning.md#what-if-the-payload-is-declared-but-the-probe-is-not-fitted) |
 
+## Clearing a yellow light
+
+Yellow means **collision detected**: the arm has stopped and paused. `Ctrl+C`
+does not clear it.
+
+1. Press `Ctrl+C` to stop the program.
+2. Check nothing is touching the arm, the probe or its cable.
+3. Clear the alarm. This does **not** move the arm:
+
+```bash
+cd "/home/yz22/Documents/code/Dobot arm"
+source setup_dobot.bash
+python3 src/dobot_e6_hw/scripts/clear_alarm.py
+```
+
+It should end with `Cleared. Light should be steady blue.`
+
+4. Start again from **step 4** of start-up (`go_home.py`, then the launch).
+
+If it keeps going yellow with nothing touching the arm, see the collision level
+in [§9](09-reference.md#collision-detection).
+
 ## Does it need a restart?
 
 | Situation | Restart? |

@@ -49,9 +49,15 @@ steady blue.
 one hand** and **hold** the power button until the light **flashes red**, then
 release. The light goes off.
 
-**Restart:** press `Ctrl+C`, then repeat **steps 4–5**. This also clears a
-**yellow** light (collision detected). If the robot was turned
+**Restart:** press `Ctrl+C`, then repeat **steps 4–5**. If the robot was turned
 off or the emergency stop was pressed, repeat from **step 1**.
+
+**Yellow light** (collision detected): `Ctrl+C`, check nothing is touching the
+arm, then clear it without moving the arm and repeat steps 4–5:
+
+```bash
+python3 src/dobot_e6_hw/scripts/clear_alarm.py
+```
 
 ## Joystick
 
