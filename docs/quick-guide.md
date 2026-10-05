@@ -40,7 +40,14 @@ ros2 launch dobot_e6_hw real_hw.launch.py robot_ip:=192.168.5.1
 **25 s more** — until `Calibration complete` appears — before touching the
 controller. About **40 s** in total.
 
-**Stop:** press `Ctrl+C` in the same terminal. The light returns to steady blue.
+**Stop the program:** press `Ctrl+C` in the same terminal. The light returns to
+steady blue.
+
+**Turn off the robot:** after stopping the program, **hold** the power button
+until the light **flashes red**, then release. The light goes off.
+
+**Restart:** press `Ctrl+C`, then repeat **steps 4–5**. If the robot was turned
+off or the emergency stop was pressed, repeat from **step 1**.
 
 ## Joystick
 
